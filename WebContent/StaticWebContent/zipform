@@ -19,7 +19,7 @@
       	<t>Enter your zip code and click submit!</t>
       </div>
       <div class="inputForm">
-        <form name="dataEntry" method="post" action="../Prediction" style="width:17em">
+        <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
           <fieldset>
             <input type="text" name="zipcode">
             <input type="button" value="predict" onClick="validateEntry(this.form)">
