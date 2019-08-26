@@ -19,10 +19,15 @@ public class PredictionData {
 	private double snowDayChance;
 	private double delayChance;
 	private int zipcode;
+	private double latitude;
+	private double longitude;
+	private String state;
 	
+
 	public PredictionData(double tempLow, double tempHigh, double tempNorm, boolean precipPresent, double precipAmount,
 			boolean alertPresent, int alertSeverity, boolean stormPresent, String stormStartTime, String stormEndTime,
-			double percentUnusual, double snowDayChance, double delayChance, int zipcode) {
+			double percentUnusual, double snowDayChance, double delayChance, int zipcode, double latitude,
+			double longitude, String state) {
 		super();
 		this.tempLow = tempLow;
 		this.tempHigh = tempHigh;
@@ -38,6 +43,9 @@ public class PredictionData {
 		this.snowDayChance = snowDayChance;
 		this.delayChance = delayChance;
 		this.zipcode = zipcode;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.state = state;
 	}
 	public double getTempLow() {
 		return tempLow;
@@ -122,5 +130,32 @@ public class PredictionData {
 	}
 	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
+	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "PredictionData [tempLow=" + tempLow + ", tempHigh=" + tempHigh + ", tempNorm=" + tempNorm
+				+ ", precipPresent=" + precipPresent + ", precipAmount=" + precipAmount + ", alertPresent="
+				+ alertPresent + ", alertSeverity=" + alertSeverity + ", stormPresent=" + stormPresent
+				+ ", stormStartTime=" + stormStartTime + ", stormEndTime=" + stormEndTime + ", percentUnusual="
+				+ percentUnusual + ", snowDayChance=" + snowDayChance + ", delayChance=" + delayChance + ", zipcode="
+				+ zipcode + ", latitude=" + latitude + ", longitude=" + longitude + ", state=" + state + "]";
 	}
 }
