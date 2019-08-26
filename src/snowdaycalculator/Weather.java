@@ -9,9 +9,9 @@ public class Weather {
 	}
 	public static void getWeather(int zipcode) {
 		try {
-			String apikey = "37fdd7c46ca515fc4b1a10c205022244\r\n";
+			String key = "37fdd7c46ca515fc4b1a10c205022244\r\n";
 			
-			URLConnection connection = new URL("https://api.openweathermap.org/data/2.5/forecast?zip="+zipcode+"&mode=xml&&APPID="+apikey).openConnection();
+			URLConnection connection = new URL("https://api.openweathermap.org/data/2.5/forecast?zip="+zipcode+"&mode=xml&&APPID="+key).openConnection();
 		    connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
 		    connection.connect();
 		    
