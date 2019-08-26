@@ -12,7 +12,7 @@
     <!-- This website uses the snowstorm animation effect created by Scott Schiller, available at https://github.com/scottschiller/snowstorm/-->
     <script src="../javascript/snowstorm.js"></script>
   </head>
-    <body bgcolor="#99ccff"> <!-- #deeeff -->
+    <body bgcolor="#7abbff"> <!-- #deeeff, #99ccff -->
       <div class="titleBlock" style="margin-bottom:100px;margin-top:40px">
         <h1 style="margin-bottom:5px">Accurate Snow Day Predictor</h1>
         <h3 style="margin-top:0px">Tired of inaccurate results? Try this data oriented prediction tool!</h3>
@@ -22,7 +22,7 @@
       </div>
       <div class="inputForm">
         <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
-          <fieldset style="border-style:solid">
+          <fieldset style="border-style:solid;border-color:black">
             <input type="text" name="zipcode">
             <input type="button" value="predict" onClick="validateEntry(this.form)" class="button">
           </fieldset>
@@ -87,6 +87,8 @@
 <script>
 <!-- Change snow animation style -->
 snowStorm.snowColor = '#ffffff'; //#99ccff
-snowStorm.flakesMaxActive = 96;
+snowStorm.flakesMaxActive = 128;
 snowStorm.excludeMobile = false;
+snowStorm.followMouse = false;
+snowStorm.snowCharacter = '*';
 </script>
