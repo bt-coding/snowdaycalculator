@@ -30,7 +30,7 @@ public class Weather {
 		}
 		return null;
 	}
-	 private static void printNote(NodeList nodeList, int a) {
+	 private static void printNote(NodeList nodeList, int a,PredictionData predictionInfo) {
 		 	double tempLow;
 			double tempHigh;
 			double tempNorm;
@@ -75,9 +75,9 @@ public class Weather {
 						}
 						//checks if that time of the data is within that morning range
 						if(start <= 12 && end <= 12 && hasReachedNearestMorningData != 3) {
-							System.out.println("\nIs within the nearest morning time");
-							System.out.println("Start: "+start);
-							System.out.println("End: "+end);
+							//System.out.println("\nIs within the nearest morning time");
+							//System.out.println("Start: "+start);
+							//System.out.println("End: "+end);
 							if(hasReachedNearestMorningData == 1) {
 								hasReachedNearestMorningData = 2;
 							}
@@ -89,30 +89,51 @@ public class Weather {
 					//extracts the information for data within the relevant time zone
 					if(hasReachedNearestMorningData == 2 && tempNode.hasAttributes() ) {
 						NamedNodeMap nodeMap = tempNode.getAttributes();
-						System.out.println("Node: "+tempNode.getNodeName());
+						//System.out.println("Node: "+tempNode.getNodeName());
 						for (int i = 0; i < nodeMap.getLength(); i++) {
 							Node node = nodeMap.item(i);
 							//checks if there is precipitation in the time period
 							if(tempNode.getNodeName().equals("precipitation") && node.getNodeName().equals("value")) {
-								precipPresent = true;
-								precipAmount += Double.parseDouble(node.getNodeValue());
+								predictionInfo.setPrecipPresent(true);
+								predictionInfo.setPrecipAmount(predictionInfo.getPrecipAmount()+Double.parseDouble(node.getNodeValue()));
 							}
-							System.out.println("attr name : " + node.getNodeName());
-							System.out.println("attr value : " + node.getNodeValue());
+							if(tempNode.getNodeName().equals("temperature")){
+								if(node.getNodeName().equals("max")) {
+									if(predictionInfo.getTempHigh() == 0) {
+										predictionInfo.setTempHigh(Double.parseDouble(node.getNodeValue()));
+									}
+									else if(predictionInfo.getTempHigh() < Double.parseDouble(node.getNodeValue())) {
+										predictionInfo.setTempHigh(Double.parseDouble(node.getNodeValue()));
+									}
+								}
+								else if(node.getNodeName().equals("min")){
+									if(predictionInfo.getTempLow() == 0) {
+										predictionInfo.setTempLow(Double.parseDouble(node.getNodeValue()));
+									}
+									else if(predictionInfo.getTempLow() > Double.parseDouble(node.getNodeValue())) {
+										predictionInfo.setTempLow(Double.parseDouble(node.getNodeValue()));
+									}
+								}
+							}
+							//System.out.println("attr name : " + node.getNodeName());
+							//System.out.println("attr value : " + node.getNodeValue());
 						}
 					}
-					
 					if (tempNode.hasChildNodes()) {
 						// loop again if has child nodes
-						printNote(tempNode.getChildNodes(),hasReachedNearestMorningData);
+						printNote(tempNode.getChildNodes(),hasReachedNearestMorningData,predictionInfo);
 					}
 					
 				}
 		    }
-		    System.out.println("Precipitation present: "+precipPresent+"\nAmount of precipitaion: "+precipAmount);
 		  }
 
 	public static void main(String[] args) {
-		printNote(getWeather(13078),1);
+		PredictionData weatherInfo = new PredictionData();
+		printNote(getWeather(13078),1,weatherInfo);
+		System.out.println("Is there precipitation: "+weatherInfo.isPrecipPresent());
+		System.out.println("Amount of precipitation: "+weatherInfo.getPrecipAmount());
+		System.out.println("Max Temp: "+weatherInfo.getTempHigh());
+		System.out.println("Min Temp: "+weatherInfo.getTempLow());
 	}
 }

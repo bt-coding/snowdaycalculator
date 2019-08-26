@@ -47,6 +47,26 @@ public class PredictionData {
 		this.longitude = longitude;
 		this.state = state;
 	}
+	public PredictionData() {
+		super();
+		this.tempLow = 0;
+		this.tempHigh = 0;
+		this.tempNorm = 0;
+		this.precipPresent = false;
+		this.precipAmount = 0;
+		this.alertPresent = false;
+		this.alertSeverity = 0;
+		this.stormPresent = false;
+		this.stormStartTime = "";
+		this.stormEndTime = "";
+		this.percentUnusual = 0;
+		this.snowDayChance = 0;
+		this.delayChance = 0;
+		this.zipcode = 0;
+		this.latitude = 0;
+		this.longitude = 0;
+		this.state = "";
+	}
 	public double getTempLow() {
 		return tempLow;
 	}
