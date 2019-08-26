@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Accurate Snow Day Predictor</title>
+  </head>
+    <body>
+      <div class="titleBlock" style="margin-bottom:100px">
+        <h1 style="margin-bottom:5px">Accurate Snow Day Predictor</h1>
+        <h3 style="margin-top:0px">Tired of inaccurate results? Try this data oriented prediction tool!</h3>
+      </div>
+      <div class="inputForm">
+        <t>Enter your zip code and click submit!</t>
+        <form name="dataEntry" method="post" action="../Prediction">
+          <input type="text" name="zipcode">
+          <input type="submit" value="submit">
+        </form>
+      </div>
+    <body>
+</html>
