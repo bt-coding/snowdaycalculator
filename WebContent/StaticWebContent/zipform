@@ -4,6 +4,11 @@
   <head>
     <title>Accurate Snow Day Predictor</title>
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="snow,day,snowday,snow day calculator,snow day predictor,calculate snow day,predict snow day">
+    <meta name="description" content="Want to know if you will have a snow day tomorrow? Tired of inaccurate predictions? Try this highly accurate snow day calculator!">
+    <meta name="language" content="EN">
+    <meta name="author" content="Tristan Lonsway, Brian Hulbert">
   </head>
     <body>
       <div class="titleBlock" style="margin-bottom:100px">
@@ -14,12 +19,15 @@
       	<t>Enter your zip code and click submit!</t>
       </div>
       <div class="inputForm">
-        <form name="dataEntry" method="post" action="../Prediction" style="width:17em">
+        <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
           <fieldset>
             <input type="text" name="zipcode">
-            <input type="submit" value="predict">
+            <input type="button" value="predict" onClick="validateEntry(this.form)">
           </fieldset>
         </form>
+      </div>
+      <div id="invalidData" style="display:none">
+      	<t id="invalidText" style="color:red">Invalid Data, please enter a valid US zip code</t>
       </div>
     <body>
 </html>
@@ -31,4 +39,40 @@
   form {
   	display: inline-block;
   }
+
 </style>
+<script type="text/javascript">
+	var tsize = 90;
+  var interval;
+  var invTxt = document.getElementById("invalidText");
+  var passed = 0;
+	function validateEntry(form) {
+		var zip = form.zipcode.value;
+      var valid = true;
+      if (!/(^\d{5}$)/.test(zip)) {
+        valid=false;
+      }
+      if (valid) {
+        document.dataEntry.submit();
+      } else {
+        document.getElementById("invalidData").style.display = "block";
+          passed = 0;
+          interval = setInterval(popText, 3);
+      }
+  }
+  function popText() {
+    if (tsize<=110 && !passed) {
+      tsize++;
+    } else {
+    	passed=1;
+    }
+    if (passed) {
+    	tsize--;
+    }
+    invTxt.style.fontSize = tsize + '%';
+    if (tsize==100 && passed) {
+    	tsize=90;
+      clearInterval(interval);
+    }
+  }
+</script>

@@ -95,6 +95,7 @@ public class Prediction extends HttpServlet {
 			doGet(request,response,false,"zipcode entered is not a valid US zipcode");
 			return;
 		}
+		System.out.println("valid zipcode received");
 		doGet(request,response,true,"");
 	}
 
