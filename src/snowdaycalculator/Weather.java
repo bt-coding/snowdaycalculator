@@ -17,22 +17,7 @@ public class Weather {
 	public static NodeList getWeather(int zipcode) {
 		try {
 			String key = "37fdd7c46ca515fc4b1a10c205022244\r\n";
-			/*
-			URLConnection connection = new URL("https://api.openweathermap.org/data/2.5/forecast?zip="+zipcode+"&mode=xml&&APPID="+key).openConnection();
-		    connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-		    connection.connect();
-		    
-		    BufferedReader r  = new BufferedReader(new InputStreamReader(connection.getInputStream(), Charset.forName("UTF-8")));
-		    
-		    StringBuilder sb = new StringBuilder();
-		    String line;
-		    while ((line = r.readLine()) != null) {
-		        sb.append(line);
-		    }
-		    
-		    String get = sb.toString();
-		    System.out.println(get);
-		    */
+			
 		    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse("https://api.openweathermap.org/data/2.5/forecast?zip="+zipcode+"&mode=xml&&APPID="+key);
@@ -46,8 +31,26 @@ public class Weather {
 		return null;
 	}
 	 private static void printNote(NodeList nodeList, int a) {
+		 	double tempLow;
+			double tempHigh;
+			double tempNorm;
+			boolean precipPresent = false;
+			double precipAmount = 0;
+			boolean alertPresent;
+			int alertSeverity;
+			boolean stormPresent;
+			String stormStartTime;
+			String stormEndTime;
+			double percentUnusual;
+			double snowDayChance;
+			double delayChance;
+			int zipcode;
+			double latitude;
+			double longitude;
+			String state;
 		 	//1 == not yet reached the time, 2 == has reached the time, 3 == has passed the time
 		 	int hasReachedNearestMorningData = a;
+		 	
 		    for (int count = 0; count < nodeList.getLength(); count++) {
 				Node tempNode = nodeList.item(count);
 				// make sure it's element node.
@@ -86,9 +89,14 @@ public class Weather {
 					//extracts the information for data within the relevant time zone
 					if(hasReachedNearestMorningData == 2 && tempNode.hasAttributes() ) {
 						NamedNodeMap nodeMap = tempNode.getAttributes();
+						System.out.println("Node: "+tempNode.getNodeName());
 						for (int i = 0; i < nodeMap.getLength(); i++) {
 							Node node = nodeMap.item(i);
-							//System.out.println("relevant information found");
+							//checks if there is precipitation in the time period
+							if(tempNode.getNodeName().equals("precipitation") && node.getNodeName().equals("value")) {
+								precipPresent = true;
+								precipAmount += Double.parseDouble(node.getNodeValue());
+							}
 							System.out.println("attr name : " + node.getNodeName());
 							System.out.println("attr value : " + node.getNodeValue());
 						}
@@ -101,6 +109,7 @@ public class Weather {
 					
 				}
 		    }
+		    System.out.println("Precipitation present: "+precipPresent+"\nAmount of precipitaion: "+precipAmount);
 		  }
 
 	public static void main(String[] args) {
