@@ -87,6 +87,8 @@
 <script>
 <!-- Change snow animation style -->
 snowStorm.snowColor = '#ffffff'; //#99ccff
-snowStorm.flakesMaxActive = 96;
+snowStorm.flakesMaxActive = 128;
 snowStorm.excludeMobile = false;
+snowStorm.followMouse = false;
+snowStorm.snowCharacter = '*';
 </script>
