@@ -22,12 +22,13 @@ public class PredictionData {
 	private double latitude;
 	private double longitude;
 	private String state;
-	
+	private String condition;
+	private double windSpeed;
 
 	public PredictionData(double tempLow, double tempHigh, double tempNorm, boolean precipPresent, double precipAmount,
 			boolean alertPresent, int alertSeverity, boolean stormPresent, String stormStartTime, String stormEndTime,
 			double percentUnusual, double snowDayChance, double delayChance, int zipcode, double latitude,
-			double longitude, String state) {
+			double longitude, String state,String condition,double windSpeed) {
 		super();
 		this.tempLow = tempLow;
 		this.tempHigh = tempHigh;
@@ -46,6 +47,8 @@ public class PredictionData {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.state = state;
+		this.condition = condition;
+		this.windSpeed = windSpeed;
 	}
 	public PredictionData() {
 		super();
@@ -66,6 +69,20 @@ public class PredictionData {
 		this.latitude = 0;
 		this.longitude = 0;
 		this.state = "";
+		this.condition = "";
+		this.windSpeed = -1;
+	}
+	public double getWindSpeed() {
+		return windSpeed;
+	}
+	public void setWindSpeed(double windSpeed) {
+		this.windSpeed = windSpeed;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
 	}
 	public double getTempLow() {
 		return tempLow;

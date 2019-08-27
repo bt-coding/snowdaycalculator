@@ -6,7 +6,12 @@ public class Calculate {
 		data = d;
 	}
 	public double snowDayChance() {
-		
+		if(data.getTempLow() > 276.483) {
+			return 0; 
+		}
+		if(!data.isPrecipPresent()) {
+			
+		}
 		return 0;
 	}
 }
