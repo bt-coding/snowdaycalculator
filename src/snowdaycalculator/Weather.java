@@ -127,7 +127,7 @@ public class Weather {
 
 	public static void main(String[] args) {
 		PredictionData weatherInfo = new PredictionData();
-		printNote(getWeather(13078),1,weatherInfo);
+		printNote(getWeather(13066),1,weatherInfo);
 		System.out.println("Is there precipitation: "+weatherInfo.isPrecipPresent());
 		System.out.println("Amount of precipitation: "+weatherInfo.getPrecipAmount());
 		System.out.println("Max Temp: "+weatherInfo.getTempHigh());

@@ -11,6 +11,14 @@
     <meta name="author" content="Tristan Lonsway, Brian Hulbert">
     <!-- This website uses the snowstorm animation effect created by Scott Schiller, available at https://github.com/scottschiller/snowstorm/-->
     <script src="../javascript/snowstorm.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- This website uses google AdSense just to maintain the server space, sorry :( -->
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-1900731882126031",
+        enable_page_level_ads: true
+      });
+    </script>
   </head>
     <body bgcolor="#7abbff"> <!-- #deeeff, #99ccff -->
       <div class="titleBlock" style="margin-bottom:100px;margin-top:40px">
