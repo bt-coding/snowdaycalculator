@@ -5,21 +5,24 @@ public class Calculate {
 	public Calculate(PredictionData d) {
 		data = d;
 	}
-	public double snowDayChance() {
+	public void snowDayChance() {
 		double snowdayChance = 0;
-		if(data.getTempLow() > 276.483) {
-			return 0; 
+		if(convertKtoF(data.getTempLow()) > 38) {
+			snowdayChance = 0;
 		}
-		if(calculateWindChill(convertMPStoMPH(data.getWindSpeed()),convertKtoF((data.getTempHigh()+data.getTempLow())/2)) <= -30) {
-			snowdayChance+=100;
+		else if(calculateWindChill(convertMPStoMPH(data.getWindSpeed()),convertKtoF(data.getTempHigh())) <= -30) {
+			snowdayChance += 100;
 		}
-		if(data.getCondition().contains("snow")){
+		else if(data.getCondition().contains("snow")){
 			snowdayChance += data.getPrecipAmount()/1219.2;
 		}
 		if(snowdayChance > 100) {
-			return 100;
+			snowdayChance = 100;
 		}
-		return snowdayChance;
+		setSnowdayChance(snowdayChance);
+	}
+	public void setSnowdayChance(double chance) {
+		data.setSnowDayChance(chance);
 	}
 	public static boolean willSnowStick(double rh, double temp) {
 		if(9.5*Math.pow(Math.E,((-17.27*temp)/(temp+238.3)))*(10.5-temp) >= rh){
