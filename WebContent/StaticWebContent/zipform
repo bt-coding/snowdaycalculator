@@ -19,6 +19,15 @@
         enable_page_level_ads: true
       });
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146513691-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-146513691-1');
+    </script>
   </head>
     <body bgcolor="#7abbff"> <!-- #deeeff, #99ccff -->
       <div class="titleBlock" style="margin-bottom:100px;margin-top:40px">

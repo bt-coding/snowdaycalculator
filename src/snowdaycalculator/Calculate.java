@@ -22,7 +22,7 @@ public class Calculate {
 		return snowdayChance;
 	}
 	public static boolean willSnowStick(double rh, double temp) {
-		if(9.5*Math.pow(Math.E,((-17.27*temp)/(temp+238.3)))*(10.5-temp) <= rh){
+		if(9.5*Math.pow(Math.E,((-17.27*temp)/(temp+238.3)))*(10.5-temp) >= rh){
 			return true;
 		}
 		return false;
@@ -37,7 +37,8 @@ public class Calculate {
         return 35.74+(0.6215*temp)-(35.75*Math.pow(ws,0.16))+(0.4275*temp*Math.pow(ws,0.16));
     }
     public static void main(String[] args) {
-    	System.out.println(calculateWindChill(40,-10));
+    	//System.out.println(calculateWindChill(40,-10));
+    	System.out.println(willSnowStick(60,6));
     }
     public static double convertKtoC(double temp) {
     	return temp-273.15;
