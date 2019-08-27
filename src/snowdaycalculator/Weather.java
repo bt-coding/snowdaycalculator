@@ -114,6 +114,15 @@ public class Weather {
 							if(tempNode.getNodeName().equals("symbol") && node.getNodeName().equals("name")){
 								predictionInfo.setCondition(predictionInfo.getCondition()+node.getNodeValue()+"\n");
 							}
+							//gets the humidity
+							if(tempNode.getNodeName().equals("humidity") && node.getNodeName().equals("value")){
+								if(predictionInfo.getHumidity() == -1){
+									predictionInfo.setHumidity(Double.parseDouble(node.getNodeValue()));
+								}
+								else {
+									predictionInfo.setHumidity((predictionInfo.getHumidity()+Double.parseDouble(node.getNodeValue()))/2);
+								}
+							}
 						}
 					}
 					if (tempNode.hasChildNodes()) {
@@ -134,5 +143,12 @@ public class Weather {
 		System.out.println("Min Temp: "+weatherInfo.getTempLow());
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
+	}
+	public static PredictionData processZip(int zip) {
+		PredictionData weatherInfo = new PredictionData();
+		printNote(getWeather(zip),1,weatherInfo);
+		Calculate calc = new Calculate(weatherInfo);
+		calc.snowDayChance();
+		return weatherInfo;
 	}
 }
