@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Accurate Snow Day Predictor</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="snow,day,snowday,snow day calculator,snow day predictor,calculate snow day,predict snow day">
+    <meta name="description" content="Want to know if you will have a snow day tomorrow? Tired of inaccurate predictions? Try this highly accurate snow day calculator!">
+    <meta name="language" content="EN">
+    <meta name="author" content="Tristan Lonsway, Brian Hulbert">
+    <!-- This website uses the snowstorm animation effect created by Scott Schiller, available at https://github.com/scottschiller/snowstorm/-->
+    <script src="../javascript/snowstorm.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- This website uses google AdSense just to maintain the server space, sorry :( -->
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-1900731882126031",
+        enable_page_level_ads: true
+      });
+    </script>
+  </head>
+    <body bgcolor="#7abbff"> <!-- #deeeff, #99ccff -->
+      <div class="titleBlock" style="margin-bottom:100px;margin-top:40px">
+        <h1 style="margin-bottom:5px">Accurate Snow Day Predictor</h1>
+        <h3 style="margin-top:0px">Tired of inaccurate results? Try this data oriented prediction tool!</h3>
+      </div>
+      <div style="margin-bottom:10px">
+      	<t>Enter your zip code and click predict!</t>
+      </div>
+      <div class="inputForm">
+        <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
+          <fieldset style="border-style:solid;border-color:black">
+            <input type="text" name="zipcode">
+            <input type="button" value="predict" onClick="validateEntry(this.form)" class="button">
+          </fieldset>
+        </form>
+      </div>
+      <div id="invalidData" style="display:none">
+      	<t id="invalidText" style="color:red">Invalid Data, please enter a valid US zip code</t>
+      </div>
+    <body>
+</html>
+<style>
+  body {
+    font-family: 'Fira Sans', serif;
+    text-align: center;
+  }
+  form {
+  	display: inline-block;
+  }
+  .button {
+  	background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+  }
+</style>
+<script type="text/javascript">
+	var tsize = 90;
+  var interval;
+  var invTxt = document.getElementById("invalidText");
+  var passed = 0;
+	function validateEntry(form) {
+		var zip = form.zipcode.value;
+      var valid = true;
+      if (!/(^\d{5}$)/.test(zip)) {
+        valid=false;
+      }
+      if (valid) {
+        document.dataEntry.submit();
+      } else {
+        document.getElementById("invalidData").style.display = "block";
+          passed = 0;
+          interval = setInterval(popText, 3);
+      }
+  }
+  function popText() {
+    if (tsize<=110 && !passed) {
+      tsize++;
+    } else {
+    	passed=1;
+    }
+    if (passed) {
+    	tsize--;
+    }
+    invTxt.style.fontSize = tsize + '%';
+    if (tsize==100 && passed) {
+    	tsize=90;
+      clearInterval(interval);
+    }
+  }
+</script>
+<script>
+<!-- Change snow animation style -->
+snowStorm.snowColor = '#ffffff'; //#99ccff
+snowStorm.flakesMaxActive = 64;
+snowStorm.excludeMobile = false;
+snowStorm.followMouse = false;
+snowStorm.snowCharacter = '*';
+</script>
