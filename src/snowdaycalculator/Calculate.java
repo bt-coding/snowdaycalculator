@@ -14,14 +14,17 @@ public class Calculate {
 		}
 		return 0;
 	}
-	public double convertFtoK(double t){
+	public static double convertFtoK(double t){
         return (t-273.15)*(9/5)+32;
     }
-    public double convertMPStoMPH(double ws){
+    public static double convertMPStoMPH(double ws){
         return ws* 2.237;
     }
-    public double calculateWindChill(double ws, double temp){
-        return 35.74+(0.6215*temp)-(35.75*Math.pow(ws,0.16))+(0.4275*Math.pow(ws,0.16));
+    public static double calculateWindChill(double ws, double temp){
+        return 35.74+(0.6215*temp)-(35.75*Math.pow(ws,0.16))+(0.4275*temp*Math.pow(ws,0.16));
+    }
+    public static void main(String[] args) {
+    	System.out.println(calculateWindChill(40,-10));
     }
 
 }
