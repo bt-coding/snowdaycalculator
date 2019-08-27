@@ -6,15 +6,28 @@ public class Calculate {
 		data = d;
 	}
 	public double snowDayChance() {
+		double snowdayChance = 0;
 		if(data.getTempLow() > 276.483) {
 			return 0; 
 		}
-		if(!data.isPrecipPresent()) {
-			
+		if(calculateWindChill(convertMPStoMPH(data.getWindSpeed()),convertKtoF((data.getTempHigh()+data.getTempLow())/2)) <= -30) {
+			snowdayChance+=100;
 		}
-		return 0;
+		if(data.getCondition().contains("snow")){
+			snowdayChance += data.getPrecipAmount()/1219.2;
+		}
+		if(snowdayChance > 100) {
+			return 100;
+		}
+		return snowdayChance;
 	}
-	public static double convertFtoK(double t){
+	public static boolean willSnowStick(double rh, double temp) {
+		if(9.5*Math.pow(Math.E,((-17.27*temp)/(temp+238.3)))*(10.5-temp) <= rh){
+			return true;
+		}
+		return false;
+	}
+	public static double convertKtoF(double t){
         return (t-273.15)*(9/5)+32;
     }
     public static double convertMPStoMPH(double ws){
@@ -25,6 +38,9 @@ public class Calculate {
     }
     public static void main(String[] args) {
     	System.out.println(calculateWindChill(40,-10));
+    }
+    public static double convertKtoC(double temp) {
+    	return temp-273.15;
     }
 
 }
