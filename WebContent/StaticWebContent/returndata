@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <title>Accurate Snow Day Predictor</title>
     <link rel="icon" href="../images/icon.png">
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta name="keywords" content="snow,day,snowday,snow day calculator,snow day predictor,calculate snow day,predict snow day">
     <meta name="description" content="Want to know if you will have a snow day tomorrow? Tired of inaccurate predictions? Try this highly accurate snow day calculator!">
@@ -13,6 +12,8 @@
     <!-- This website uses the snowstorm animation effect created by Scott Schiller, available at https://github.com/scottschiller/snowstorm/-->
     <script src="../javascript/snowstorm.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <meta name="google-site-verification" content="Fu9jPP9wy3xYHwDDYe1NQUQORm9JYV23KLj7BYRUawo" />
     <!-- This website uses google AdSense just to maintain the server space, sorry :( -->
     <script>
@@ -30,6 +31,7 @@
 
       gtag('config', 'UA-146513691-1');
     </script>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
   </head>
         <body style="background-color:#7abbff"> <!-- #deeeff, #99ccff -->
       <div class="titleBlock" style="margin-bottom:50px;margin-top:40px;text-align:center">
@@ -37,20 +39,17 @@
         <h3 style="margin-top:0px">Tired of inaccurate results? Try this data oriented prediction tool!</h3>
       </div>
       <div name="predictArea" style="position:relative;text-align:center">
-        <div name="userData" style="align:center;display:inline-block;margin-top:100px;width:400px">
-          <div style="margin-bottom:10px">
-          	<t>Enter your zip code and click predict!</t>
+        <div name="predictionData" style="align:center;display:inline-block;margin-top:100px">
+          <div class="resultText">
+            <t class="percentChance" style="font-size:50px">50%</t>
           </div>
-          <div class="inputForm">
-            <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
-              <fieldset style="border-style:solid;border-color:black">
-                <input type="text" name="zipcode" placeholder="Your Zipcode.." style="border-radius:6px">
-                <input type="button" value="predict" onClick="validateEntry(this.form)" class="button">
-              </fieldset>
-            </form>
+          <div class="container;width=400px">
+          <div class="progress" style="height:50px">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:200px">
+            </div>
+            <div class="progress-bar progress-bar-success" role="progressbar" style="width:200px">
+            </div>
           </div>
-          <div id="invalidData" style="display:none">
-          	<t id="invalidText" style="color:red">Invalid Data, please enter a valid US zip code</t>
           </div>
         </div>
         <div name="twitterBox" style="margin-right:0px;display:inline-block;position:absolute;width:33%;height:0px;vertical-align:top;margin-top:0px">
@@ -73,52 +72,7 @@
   body {
     font-family: 'Fira Sans', serif;
   }
-  form {
-  	display: inline-block;
-  }
-  .button {
-  	background-color: #008CBA;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 12px;
-  }
 </style>
-<script type="text/javascript">
-	var tsize = 90;
-  var interval;
-  var invTxt = document.getElementById("invalidText");
-  var passed = 0;
-	function validateEntry(form) {
-		var zip = form.zipcode.value;
-      var valid = true;
-      if (!/(^\d{5}$)/.test(zip)) {
-        valid=false;
-      }
-      if (valid) {
-        document.dataEntry.submit();
-      } else {
-        document.getElementById("invalidData").style.display = "block";
-          passed = 0;
-          interval = setInterval(popText, 3);
-      }
-  }
-  function popText() {
-    if (tsize<=110 && !passed) {
-      tsize++;
-    } else {
-    	passed=1;
-    }
-    if (passed) {
-    	tsize--;
-    }
-    invTxt.style.fontSize = tsize + '%';
-    if (tsize==100 && passed) {
-    	tsize=90;
-      clearInterval(interval);
-    }
-  }
-</script>
 <script>
 <!-- Change snow animation style -->
 snowStorm.snowColor = '#ffffff'; //#99ccff
