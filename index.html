@@ -29,23 +29,32 @@
     </script>
   </head>
     <body bgcolor="#7abbff"> <!-- #deeeff, #99ccff -->
-      <div class="titleBlock" style="margin-bottom:100px;margin-top:40px">
+      <div class="titleBlock" style="margin-bottom:50px;margin-top:40px">
         <h1 style="margin-bottom:5px">Accurate Snow Day Predictor</h1>
         <h3 style="margin-top:0px">Tired of inaccurate results? Try this data oriented prediction tool!</h3>
       </div>
-      <div style="margin-bottom:10px">
-      	<t>Enter your zip code and click predict!</t>
-      </div>
-      <div class="inputForm">
-        <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
-          <fieldset style="border-style:solid;border-color:black">
-            <input type="text" name="zipcode">
-            <input type="button" value="predict" onClick="validateEntry(this.form)" class="button">
-          </fieldset>
-        </form>
-      </div>
-      <div id="invalidData" style="display:none">
-      	<t id="invalidText" style="color:red">Invalid Data, please enter a valid US zip code</t>
+      <div name="predictArea" style="position:relative">
+
+        <div name="userData" style="align:center;display:inline-block;margin-top:100px">
+          <div style="margin-bottom:10px">
+          	<t>Enter your zip code and click predict!</t>
+          </div>
+          <div class="inputForm">
+            <form name="dataEntry" method="post" action="../Prediction" style="width:17em" onkeydown="return event.key != 'Enter';">
+              <fieldset style="border-style:solid;border-color:black">
+                <input type="text" name="zipcode" placeholder="Your Zipcode.." style="border-radius:6px">
+                <input type="button" value="predict" onClick="validateEntry(this.form)" class="button">
+              </fieldset>
+            </form>
+          </div>
+          <div id="invalidData" style="display:none">
+          	<t id="invalidText" style="color:red">Invalid Data, please enter a valid US zip code</t>
+          </div>
+
+        </div>
+        <div name="twitterBox" style="margin-right:0px;display:inline-block;position:absolute;width:33%;height:0px;vertical-align:top;margin-top:0px">
+          <a class="twitter-timeline" data-lang="en" data-width="300" data-height="600" data-dnt="true" data-theme="light" href="https://twitter.com/NWS?ref_src=twsrc%5Etfw">Tweets by NWS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
       </div>
     <body>
 </html>
