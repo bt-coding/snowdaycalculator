@@ -58,7 +58,7 @@ public class Prediction extends HttpServlet {
 							"<html>\r\n" + 
 							"  <head>\r\n" + 
 							"    <title>Accurate Snow Day Predictor</title>\r\n" + 
-							"    <link rel=\"icon\" href=\"../images/icon.png\">\r\n" + 
+							"    <link rel=\"icon\" href=\"./images/icon.png\">\r\n" + 
 							"    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css\">\r\n" + 
 							"    <meta charset=\"UTF-8\">\r\n" + 
 							"    <meta name=\"keywords\" content=\"snow,day,snowday,snow day calculator,snow day predictor,calculate snow day,predict snow day\">\r\n" + 
@@ -66,7 +66,7 @@ public class Prediction extends HttpServlet {
 							"    <meta name=\"language\" content=\"EN\">\r\n" + 
 							"    <meta name=\"author\" content=\"Tristan Lonsway, Brian Hulbert\">\r\n" + 
 							"    <!-- This website uses the snowstorm animation effect created by Scott Schiller, available at https://github.com/scottschiller/snowstorm/-->\r\n" + 
-							"    <script src=\"../javascript/snowstorm.js\"></script>\r\n" + 
+							"    <script src=\"./javascript/snowstorm.js\"></script>\r\n" + 
 							"    <script async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>\r\n" + 
 							"    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n" + 
 							"    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>\r\n" + 
@@ -113,7 +113,7 @@ public class Prediction extends HttpServlet {
 							"        </div>\r\n" + 
 							"      </div>\r\n" + 
 							"      <div name=\"cloudMap\" style=\"text-align:center;margin-right:400px;margin-top:74px\">\r\n" + 
-							"        <img src=\"../images/worldMap.jpg\" width=\"400\" height=\"400\" class=\"worldMap\">\r\n" + 
+							"        <img src=\"./images/worldMap.jpg\" width=\"400\" height=\"400\" class=\"worldMap\">\r\n" + 
 							"        <img style=\"-webkit-user-select: none;margin: auto;cursor: zoom-in;\" src=\"https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=37fdd7c46ca515fc4b1a10c205022244\" width=\"400\" height=\"400\" class=\"clouds\">\r\n" + 
 							"      </div>\r\n" + 
 							"    <body>\r\n" + 
