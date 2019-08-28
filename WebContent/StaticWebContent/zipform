@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>Accurate Snow Day Predictor</title>
+    <link rel="icon" href="../images/icon.png">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="keywords" content="snow,day,snowday,snow day calculator,snow day predictor,calculate snow day,predict snow day">
@@ -12,6 +13,7 @@
     <!-- This website uses the snowstorm animation effect created by Scott Schiller, available at https://github.com/scottschiller/snowstorm/-->
     <script src="../javascript/snowstorm.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta name="google-site-verification" content="Fu9jPP9wy3xYHwDDYe1NQUQORm9JYV23KLj7BYRUawo" />
     <!-- This website uses google AdSense just to maintain the server space, sorry :( -->
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
@@ -30,12 +32,11 @@
     </script>
   </head>
         <body bgcolor="#7abbff"> <!-- #deeeff, #99ccff -->
-      <div class="titleBlock" style="margin-bottom:50px;margin-top:40px">
+      <div class="titleBlock" style="margin-bottom:50px;margin-top:40px;text-align:center">
         <h1 style="margin-bottom:5px">Accurate Snow Day Predictor</h1>
         <h3 style="margin-top:0px">Tired of inaccurate results? Try this data oriented prediction tool!</h3>
       </div>
-      <div name="predictArea" style="position:relative">
-
+      <div name="predictArea" style="position:relative;text-align:center">
         <div name="userData" style="align:center;display:inline-block;margin-top:100px">
           <div style="margin-bottom:10px">
           	<t>Enter your zip code and click predict!</t>
@@ -51,18 +52,26 @@
           <div id="invalidData" style="display:none">
           	<t id="invalidText" style="color:red">Invalid Data, please enter a valid US zip code</t>
           </div>
-
         </div>
         <div name="twitterBox" style="margin-right:0px;display:inline-block;position:absolute;width:33%;height:0px;vertical-align:top;margin-top:0px">
           <a class="twitter-timeline" data-lang="en" data-width="300" data-height="600" data-dnt="true" data-theme="light" href="https://twitter.com/NWS?ref_src=twsrc%5Etfw">Tweets by NWS</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
       </div>
+      <div name="cloudMap" style="text-align:center;margin-right:400px;margin-top:74px">
+        <img src="../images/worldMap.jpg" width="400" height="400" class="worldMap">
+        <img style="-webkit-user-select: none;margin: auto;cursor: zoom-in;" src="https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=37fdd7c46ca515fc4b1a10c205022244" width="400" height="400" class="clouds">
+      </div>
     <body>
 </html>
 <style>
+  .worldMap {
+    position: absolute;
+  }
+  .clouds {
+    position: absolute;
+  }
   body {
     font-family: 'Fira Sans', serif;
-    text-align: center;
   }
   form {
   	display: inline-block;
