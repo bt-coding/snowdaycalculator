@@ -26,7 +26,8 @@ public class ImageDownload implements Runnable {
 			File imageLoc = new File("WebContent/backendGenerated/precipMap.png");
 			URL url = null;
 			try {
-				url = new URL("https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=" + APIKEY);
+				//url = new URL("https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=" + APIKEY);
+				url = new URL("https://tilecache.rainviewer.com/v2/composite/1566937800/8000/2/0_1.png");
 			} catch (Exception e) {
 				System.out.println("Failed to download API map image");
 				e.printStackTrace();
