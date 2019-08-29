@@ -72,6 +72,9 @@
   body {
     font-family: 'Fira Sans', serif;
   }
+  .progress-bar-success {
+    background-color: gray;
+  }
 </style>
 <script>
 <!-- Change snow animation style -->

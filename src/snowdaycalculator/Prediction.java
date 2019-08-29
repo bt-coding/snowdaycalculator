@@ -114,7 +114,7 @@ public class Prediction extends HttpServlet {
 							"      </div>\r\n" + 
 							"      <div name=\"cloudMap\" style=\"text-align:center;margin-right:400px;margin-top:74px\">\r\n" + 
 							"        <img src=\"./images/worldMap.jpg\" width=\"400\" height=\"400\" class=\"worldMap\">\r\n" + 
-							"        <img style=\"-webkit-user-select: none;margin: auto;cursor: zoom-in;\" src=\"https://tile.openweathermap.org/map/precipitation_new/0/0/0.png?appid=37fdd7c46ca515fc4b1a10c205022244\" width=\"400\" height=\"400\" class=\"clouds\">\r\n" + 
+							"        <img style=\"-webkit-user-select: none;margin: auto;cursor: zoom-in;\" src=\"./backendGenerated/precipMap.png\" width=\"400\" height=\"400\" class=\"clouds\">\r\n" + 
 							"      </div>\r\n" + 
 							"    <body>\r\n" + 
 							"</html>\r\n" + 
