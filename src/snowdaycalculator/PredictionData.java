@@ -25,11 +25,12 @@ public class PredictionData {
 	private String condition;
 	private double windSpeed;
 	private double humidity;
+	private double plowEfficiency;
 
 	public PredictionData(double tempLow, double tempHigh, double tempNorm, boolean precipPresent, double precipAmount,
 			boolean alertPresent, int alertSeverity, boolean stormPresent, String stormStartTime, String stormEndTime,
 			double percentUnusual, double snowDayChance, double delayChance, int zipcode, double latitude,
-			double longitude, String state,String condition,double windSpeed,double humidity) {
+			double longitude, String state,String condition,double windSpeed,double humidity, double plowEfficiency) {
 		super();
 		this.tempLow = tempLow;
 		this.tempHigh = tempHigh;
@@ -51,6 +52,7 @@ public class PredictionData {
 		this.condition = condition;
 		this.windSpeed = windSpeed;
 		this.humidity = humidity;
+		this.plowEfficiency = plowEfficiency;
 	}
 	public PredictionData() {
 		super();
@@ -74,6 +76,12 @@ public class PredictionData {
 		this.condition = "";
 		this.windSpeed = -1;
 		this.humidity = -1;
+	}
+	public double getPlowEfficiency() {
+		return this.plowEfficiency;
+	}
+	public void setPlowEfficiency(double plowEfficiency) {
+		this.plowEfficiency = plowEfficiency;
 	}
 	public double getHumidity() {
 		return humidity;

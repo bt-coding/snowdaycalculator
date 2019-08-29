@@ -14,7 +14,7 @@ public class Calculate {
 			snowdayChance += 100;
 		}
 		else if(data.getCondition().contains("snow")){
-			snowdayChance += data.getPrecipAmount()/1219.2;
+			snowdayChance += 100*(data.getPrecipAmount()/914.4)*(2-data.getPlowEfficiency());
 		}
 		if(snowdayChance > 100) {
 			snowdayChance = 100;

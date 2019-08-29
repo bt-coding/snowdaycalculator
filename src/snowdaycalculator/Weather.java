@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NamedNodeMap;
+import java.util.*;
 public class Weather {
 	public Weather() {
 		
@@ -133,7 +134,48 @@ public class Weather {
 				}
 		    }
 		  }
-
+	public static void getZipSpecifications(int zipcode) {
+		String info = "";
+		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/zipCodeInfo.csv"));) {
+		    while (scanner.hasNextLine()) {
+		    	String temp = scanner.nextLine();
+		    	//System.out.println(temp.substring(0,5));
+		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,5)) == zipcode) {
+		    		info = temp;
+		    		break;
+		    	}
+		    }
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		double popDensity = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
+		info = info.substring(0,info.lastIndexOf(","));
+		double areaOfZip = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
+		System.out.println("Pop density: "+popDensity);
+		System.out.println("Area of zipcode: "+areaOfZip);
+		info = "";
+		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/zipCodeInfo2.csv"));) {
+		    while (scanner.hasNextLine()) {
+		    	String temp = scanner.nextLine();
+		    	//System.out.println(temp.substring(0,5));
+		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,5)) == zipcode) {
+		    		info = temp;
+		    		break;
+		    	}
+		    }
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		double lon = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
+		System.out.println("lon: "+lon);
+		double lat = Double.parseDouble(info.substring(info.lastIndexOf(";")+1,info.lastIndexOf(",")));
+		System.out.println("lat: "+lat);
+		info = info.substring(info.indexOf(";")+1);
+		String loc = info.substring(0,info.indexOf(";"))+" "+info.substring(info.indexOf(";")+1,info.indexOf(";")+3);
+		System.out.println(loc);
+	}
 	public static void main(String[] args) {
 		PredictionData weatherInfo = new PredictionData();
 		printNote(getWeather(13066),1,weatherInfo);
@@ -143,6 +185,7 @@ public class Weather {
 		System.out.println("Min Temp: "+weatherInfo.getTempLow());
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
+		getZipSpecifications(13078);
 	}
 	public static PredictionData processZip(int zip) {
 		PredictionData weatherInfo = new PredictionData();
