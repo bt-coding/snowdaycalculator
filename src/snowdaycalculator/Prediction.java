@@ -127,7 +127,10 @@ public class Prediction extends HttpServlet {
 							"  }\r\n" + 
 							"  body {\r\n" + 
 							"    font-family: 'Fira Sans', serif;\r\n" + 
-							"  }\r\n" + 
+							"  }\r\n" +
+							" .progress-bar-success {" +
+							"	 background-color: #a4a4a4" +
+							"  }" +
 							"</style>\r\n" + 
 							"<script>\r\n" + 
 							"<!-- Change snow animation style -->\r\n" + 

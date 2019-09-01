@@ -19,6 +19,7 @@ public class Calculate {
 		if(snowdayChance > 100) {
 			snowdayChance = 100;
 		}
+		snowdayChance = .34;
 		setSnowdayChance(snowdayChance);
 	}
 	public void setSnowdayChance(double chance) {
