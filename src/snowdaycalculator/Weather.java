@@ -1,5 +1,6 @@
 package snowdaycalculator;
 import java.net.*;
+import java.util.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -17,14 +18,8 @@ public class Weather {
 	}
 	public static NodeList getWeather(int zipcode) {
 		try {
-			String key = "";
-			/*System.out.println("Working Directory = " +
-		              System.getProperty("user.dir"));
-			BufferedReader apiReader = new BufferedReader(new FileReader(new File("../resources/apikey.txt")));
-			key=apiReader.readLine();
-			apiReader.close();
-		    */
-			key = "37fdd7c46ca515fc4b1a10c205022244";
+			String key = "37fdd7c46ca515fc4b1a10c205022244\r\n";
+			
 		    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse("https://api.openweathermap.org/data/2.5/forecast?zip="+zipcode+"&mode=xml&&APPID="+key);
@@ -142,7 +137,7 @@ public class Weather {
 		  }
 	public static void getZipSpecifications(int zipcode) {
 		String info = "";
-		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo.csv"));) {
+		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/zipCodeInfo.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
 		    	//System.out.println(temp.substring(0,5));
@@ -161,7 +156,7 @@ public class Weather {
 		System.out.println("Pop density: "+popDensity);
 		System.out.println("Area of zipcode: "+areaOfZip);
 		info = "";
-		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo2.csv"));) {
+		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/zipCodeInfo2.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
 		    	//System.out.println(temp.substring(0,5));
@@ -192,6 +187,47 @@ public class Weather {
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
 		getZipSpecifications(13078);
+	}
+	public double[] getDataPoints(double lon, double lat, String state,int monthNum) {
+		double[] dataPoints = new double[1];
+		ArrayList<String> Stations;
+		for(int year = 2016; year <= 2018; year++) {
+			//sorts all of the stations by distance to the input cords
+			Stations = new ArrayList<String>();
+	 		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/snowfalldata/"+state+"/"+year+"/"+state+"-"+year+"-"+monthNum+"_STATION_COUNTY_SNOWFALL.csv"));) {
+	 			scanner.nextLine();
+	 			String numDays = scanner.nextLine();
+	 			if(dataPoints.length != 1) {
+	 				dataPoints = new double[Integer.parseInt(numDays.substring(numDays.lastIndexOf(","),numDays.lastIndexOf("-")))];
+	 			}
+	 			while (scanner.hasNextLine()) {
+			    	String temp = scanner.nextLine();
+			    	double distance = getDistance(lat,lon,Double.parseDouble(temp.substring(nthIndexOf(temp,",",4)+1,nthIndexOf(temp,",",5))),Double.parseDouble(temp.substring(nthIndexOf(temp,",",5)+1,nthIndexOf(temp,",",6))));
+			    	for(int i = 0; i < Stations.size();i++) {
+			    		if(Stations.size() == 0 && !temp.contains("M")) {
+			    			Stations.add(temp+","+distance);
+			    		}
+			    		else if(distance < Double.parseDouble(Stations.get(i).substring(Stations.get(i).lastIndexOf(","))) && !temp.contains("M")) {
+			    			Stations.add(i,temp+","+distance);
+			    		}
+			    	}
+	 			}
+			}
+	 		catch(Exception e) {
+	 			e.printStackTrace();
+	 		}
+		}
+ 		
+ 		return dataPoints;
+	}
+	public static int nthIndexOf(String str, String substr, int n) {
+	    int pos = str.indexOf(substr);
+	    while (--n > 0 && pos != -1)
+	        pos = str.indexOf(substr, pos + 1);
+	    return pos;
+	}
+	public double getDistance(double x1,double y1,double x2,double y2) {
+		return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
 	}
 	public static PredictionData processZip(int zip) {
 		PredictionData weatherInfo = new PredictionData();
