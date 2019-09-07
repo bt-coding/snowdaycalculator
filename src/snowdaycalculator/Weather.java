@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NamedNodeMap;
-import java.util.*;
+//import org.apache.commons.lang3.StringUtils;
 public class Weather {
 	public Weather() {
 		
@@ -193,37 +193,74 @@ public class Weather {
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
 		getZipSpecifications(13078);
+		getDataPoints(30,30,"NY",1);
 	}
-	public double[] getDataPoints(double lon, double lat, String state,int monthNum) {
+	public static double[] getDataPoints(double lon, double lat, String state,int monthNum) {
 		double[] dataPoints = new double[1];
 		ArrayList<String> Stations;
+		int monthLength = 0;
 		for(int year = 2016; year <= 2018; year++) {
 			//sorts all of the stations by distance to the input cords
 			Stations = new ArrayList<String>();
+			
 	 		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/snowfalldata/"+state+"/"+year+"/"+state+"-"+year+"-"+monthNum+"_STATION_COUNTY_SNOWFALL.csv"));) {
 	 			scanner.nextLine();
 	 			String numDays = scanner.nextLine();
-	 			if(dataPoints.length != 1) {
-	 				dataPoints = new double[Integer.parseInt(numDays.substring(numDays.lastIndexOf(","),numDays.lastIndexOf("-")))];
+	 			if(dataPoints.length == 1) {
+	 				//the 5 nearest places for the past 3 years
+	 				//monthLength = StringUtils.countOccurrencesOf(numDays,",")-5;
+	 				monthLength = Integer.parseInt(numDays.substring(numDays.lastIndexOf(" ")+1,numDays.lastIndexOf("\"")));
+	 				dataPoints = new double[3*5*monthLength];
 	 			}
 	 			while (scanner.hasNextLine()) {
 			    	String temp = scanner.nextLine();
 			    	double distance = getDistance(lat,lon,Double.parseDouble(temp.substring(nthIndexOf(temp,",",4)+1,nthIndexOf(temp,",",5))),Double.parseDouble(temp.substring(nthIndexOf(temp,",",5)+1,nthIndexOf(temp,",",6))));
-			    	for(int i = 0; i < Stations.size();i++) {
-			    		if(Stations.size() == 0 && !temp.contains("M")) {
-			    			Stations.add(temp+","+distance);
-			    		}
-			    		else if(distance < Double.parseDouble(Stations.get(i).substring(Stations.get(i).lastIndexOf(","))) && !temp.contains("M")) {
-			    			Stations.add(i,temp+","+distance);
-			    		}
+			    	if(Stations.size() == 0 && !temp.contains("M")) {
+		    			Stations.add(temp);
+		    		}
+			    	else {
+				    	for(int i = 0; i < Stations.size();i++) {
+				    		if(distance < Double.parseDouble(Stations.get(i).substring(Stations.get(i).lastIndexOf(",")+1)) && !temp.contains("M")) {
+				    			Stations.add(i,temp);
+				    			break;
+				    		}
+				    	}
 			    	}
+	 			}
+	 			//pulls out the top five closest stations and extracts the snow fall data
+	 			for(int i = 0; i < 5; i++) {
+	 				String stationInfo = Stations.get(i);
+	 				stationInfo = stationInfo.substring(nthIndexOf(stationInfo,",",6)+1);
+	 				int count = 0;
+	 				System.out.println(stationInfo);
+	 				while(!stationInfo.equals("")) {
+	 					
+	 					if(stationInfo.substring(0,1).equals("T")) {
+	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = 0.01;
+	 						stationInfo = stationInfo.substring(stationInfo.indexOf(",")+1);
+	 						System.out.println("Index: "+(i*monthLength+count+((year-2016)*monthLength*5)));
+	 					}
+	 					else if(stationInfo.contains(",")) {
+	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = Double.parseDouble(stationInfo.substring(0,stationInfo.indexOf(",")));
+	 						stationInfo = stationInfo.substring(stationInfo.indexOf(",")+1);
+	 						System.out.println("Index: "+(i*monthLength+count+((year-2016)*monthLength*5)));
+	 					}
+	 					else {
+	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = Double.parseDouble(stationInfo);
+	 						System.out.println("\n"+(i*monthLength+count+((year-2016)*monthLength*5))+" "+count+"\n");
+	 						stationInfo = "";
+	 					}
+	 					count++;
+	 				}
 	 			}
 			}
 	 		catch(Exception e) {
 	 			e.printStackTrace();
 	 		}
 		}
- 		
+ 		for(double e: dataPoints) {
+ 			System.out.println(e);
+ 		}
  		return dataPoints;
 	}
 	public static int nthIndexOf(String str, String substr, int n) {
@@ -232,7 +269,7 @@ public class Weather {
 	        pos = str.indexOf(substr, pos + 1);
 	    return pos;
 	}
-	public double getDistance(double x1,double y1,double x2,double y2) {
+	public static double getDistance(double x1,double y1,double x2,double y2) {
 		return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
 	}
 	public static PredictionData processZip(int zip) {
