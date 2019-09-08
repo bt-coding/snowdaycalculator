@@ -1,5 +1,7 @@
 package snowdaycalculator;
 
+import java.util.*;
+
 public class Calculate {
 	PredictionData data;
 	public Calculate(PredictionData d) {
@@ -13,7 +15,7 @@ public class Calculate {
 		else if(calculateWindChill(convertMPStoMPH(data.getWindSpeed()),convertKtoF(data.getTempHigh())) <= -30) {
 			snowdayChance += 100;
 		}
-		else if(data.getCondition().contains("snow")){
+		else if(data.getCondition().toLowerCase().contains("snow")){
 			snowdayChance += 100*(data.getPrecipAmount()/914.4)*(2-data.getPlowEfficiency());
 		}
 		if(snowdayChance > 100) {
@@ -46,6 +48,17 @@ public class Calculate {
     }
     public static double convertKtoC(double temp) {
     	return temp-273.15;
+    }
+    public static double dataIrregularity(double point, ArrayList<Double> datapoints) {
+    	double total=0;
+    	for(double d : datapoints) {
+    		total+=d;
+    	}
+    	double ave = total/datapoints.size();
+    	//ouble var
+    	
+    	
+    	return 0;
     }
 
 }

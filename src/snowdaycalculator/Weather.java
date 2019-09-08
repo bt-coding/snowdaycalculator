@@ -192,8 +192,8 @@ public class Weather {
 		System.out.println("Min Temp: "+weatherInfo.getTempLow());
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
-		getZipSpecifications(13078);
-		getDataPoints(30,30,"NY",1);
+		getZipSpecifications(13066);
+		getDataPoints(42.8864,78.8784,"NY",1);
 	}
 	public static double[] getDataPoints(double lon, double lat, String state,int monthNum) {
 		double[] dataPoints = new double[1];
@@ -203,7 +203,7 @@ public class Weather {
 			//sorts all of the stations by distance to the input cords
 			Stations = new ArrayList<String>();
 			
-	 		try (Scanner scanner = new Scanner(new File("C:/Users/brian/Desktop/snowfalldata/"+state+"/"+year+"/"+state+"-"+year+"-"+monthNum+"_STATION_COUNTY_SNOWFALL.csv"));) {
+	 		try (Scanner scanner = new Scanner(new File("resources/snowfalldata/"+state+"/"+year+"/"+state+"-"+year+"-"+monthNum+"_STATION_COUNTY_SNOWFALL.csv"));) {
 	 			scanner.nextLine();
 	 			String numDays = scanner.nextLine();
 	 			if(dataPoints.length == 1) {
