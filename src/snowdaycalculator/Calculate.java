@@ -1,6 +1,7 @@
 package snowdaycalculator;
 
 import java.util.*;
+import java.time.*;
 
 public class Calculate {
 	PredictionData data;
@@ -21,7 +22,10 @@ public class Calculate {
 		if(snowdayChance > 100) {
 			snowdayChance = 100;
 		}
-		snowdayChance = .34;
+		Date date = new Date();
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		int month = localDate.getMonthValue();
+		snowdayChance = dataIrregularityChance(data.getPrecipAmount(),Weather.getDataPoints(data.getLongitude(), data.getLatitude(), data.getState(), month));
 		setSnowdayChance(snowdayChance);
 	}
 	public void setSnowdayChance(double chance) {
@@ -49,16 +53,22 @@ public class Calculate {
     public static double convertKtoC(double temp) {
     	return temp-273.15;
     }
-    public static double dataIrregularity(double point, ArrayList<Double> datapoints) {
+    public static double dataIrregularityChance(double point, double[] datapoints) {
     	double total=0;
     	for(double d : datapoints) {
     		total+=d;
     	}
-    	double ave = total/datapoints.size();
-    	//ouble var
-    	
-    	
-    	return 0;
+    	double ave = total/datapoints.length;
+        double totsquare = 0;
+        for(double d : datapoints) {
+        	totsquare+=((d-ave)*(d-ave));
+        }
+        totsquare/=datapoints.length;
+        double stdev = Math.sqrt(totsquare);
+    	double chance = 0;
+        if (stdev!=0) {
+    		chance = 8*(point/stdev);
+    	}
+    	return chance;
     }
-
 }
