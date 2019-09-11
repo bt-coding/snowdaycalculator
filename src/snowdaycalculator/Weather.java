@@ -214,13 +214,13 @@ public class Weather {
 	 			while (scanner.hasNextLine()) {
 			    	String temp = scanner.nextLine();
 			    	double distance = getDistance(lat,lon,Double.parseDouble(temp.substring(nthIndexOf(temp,",",4)+1,nthIndexOf(temp,",",5))),Double.parseDouble(temp.substring(nthIndexOf(temp,",",5)+1,nthIndexOf(temp,",",6))));
-			    	if(Stations.size() == 0 && !temp.contains("M")) {
+			    	if(Stations.size() == 0 && countOccurances(temp.substring(nthIndexOf(temp,",",6)+1),"M") <= 10) {
 		    			Stations.add(temp+","+distance);
 		    		}
 			    	else {
 			    		
 				    	for(int i = 0; i < Stations.size();i++) {
-				    		if(!temp.contains("M") && distance < Double.parseDouble(Stations.get(i).substring(Stations.get(i).lastIndexOf(",")+1))) {
+				    		if(countOccurances(temp.substring(nthIndexOf(temp,",",6)+1),"M") <= 10 && distance < Double.parseDouble(Stations.get(i).substring(Stations.get(i).lastIndexOf(",")+1))) {
 				    			Stations.add(i,temp+","+distance);
 				    			i = Stations.size();
 				    		}
@@ -248,6 +248,15 @@ public class Weather {
 	 						}
 	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = 0.01;
 	 						//System.out.println("Index: "+(i*monthLength+count+((year-2016)*monthLength*5))+" Count: "+count);
+	 					}
+	 					else if(stationInfo.substring(0,1).equals("M")) {
+	 						if(stationInfo.length() == 1) {
+	 							stationInfo = "";
+	 						}
+	 						else {
+	 							stationInfo = stationInfo.substring(stationInfo.indexOf(",")+1);
+	 						}
+	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = -1;
 	 					}
 	 					else if(stationInfo.contains(",")) {
 	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = Double.parseDouble(stationInfo.substring(0,stationInfo.indexOf(",")));
