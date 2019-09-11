@@ -276,10 +276,27 @@ public class Weather {
 	 			e.printStackTrace();
 	 		}
 		}
+ 		int numMs = 0;
  		for(double e: dataPoints) {
+ 			if(e == -1) {
+ 				numMs++;
+ 			}
+ 		}
+ 		double[] dataPointsExcludingMs = new double[dataPoints.length-numMs]; 
+ 		int count = 0;
+ 		for(int i = 0; i < dataPoints.length; i++){
+ 			if(dataPoints[i] != -1) {
+ 				dataPointsExcludingMs[i-count] = dataPoints[i];
+ 				
+ 			}
+ 			else {
+ 				count++;
+ 			}
+ 		}
+ 		for(double e: dataPointsExcludingMs) {
  			System.out.println(e);
  		}
- 		return dataPoints;
+ 		return dataPointsExcludingMs;
 	}
 	public static int nthIndexOf(String str, String substr, int n) {
 	    int pos = str.indexOf(substr);
