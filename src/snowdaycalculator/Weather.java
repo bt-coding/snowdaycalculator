@@ -11,20 +11,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NamedNodeMap;
-//import org.apache.commons.lang3.StringUtils;
 public class Weather {
 	public Weather() {
 		
 	}
+	//The constructor method for the class
 	public static NodeList getWeather(int zipcode) {
 		try {
 			String key = "";
-			/*System.out.println("Working Directory = " +
-		              System.getProperty("user.dir"));
-			BufferedReader apiReader = new BufferedReader(new FileReader(new File("../resources/apikey.txt")));
-			key=apiReader.readLine();
-			apiReader.close();
-		    */
 			key = "37fdd7c46ca515fc4b1a10c205022244";			
 		    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -38,6 +32,12 @@ public class Weather {
 		}
 		return null;
 	}
+	/*
+	 * pulls information off of the openWeather map api
+	 * extracts information out using an XML reader
+	 * puts that information into the PredictionData class
+	 * 
+	 */
 	 private static void printNote(NodeList nodeList, int a,PredictionData predictionInfo) {
 		 	//1 == not yet reached the time, 2 == has reached the time, 3 == has passed the time
 		 	int hasReachedNearestMorningData = a;
@@ -64,12 +64,8 @@ public class Weather {
 						if(end <= 12){
 							predictionInfo.setCondition(predictionInfo.getCondition()+start+"-"+end+": ");
 						}
-						
 						//checks if that time of the data is within that morning range
 						if(start <= 12 && end <= 12 && hasReachedNearestMorningData != 3) {
-							//System.out.println("\nIs within the nearest morning time");
-							//System.out.println("Start: "+start);
-							//System.out.println("End: "+end);
 							if(hasReachedNearestMorningData == 1) {
 								hasReachedNearestMorningData = 2;
 							}
@@ -83,7 +79,6 @@ public class Weather {
 					//extracts the information for data within the relevant time zone
 					if(hasReachedNearestMorningData == 2 && tempNode.hasAttributes() ) {
 						NamedNodeMap nodeMap = tempNode.getAttributes();
-						//System.out.println("Node: "+tempNode.getNodeName());
 						for (int i = 0; i < nodeMap.getLength(); i++) {
 							Node node = nodeMap.item(i);
 							//checks if there is precipitation in the time period
@@ -146,7 +141,6 @@ public class Weather {
 		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
-		    	//System.out.println(temp.substring(0,5));
 		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,5)) == zipcode) {
 		    		info = temp;
 		    		break;
@@ -165,7 +159,6 @@ public class Weather {
 		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo2.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
-		    	//System.out.println(temp.substring(0,5));
 		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,5)) == zipcode) {
 		    		info = temp;
 		    		break;
@@ -231,8 +224,9 @@ public class Weather {
 				    	}
 			    	}
 	 			}
-	 			//System.out.println("StationInfo length: "+Stations.size());
 	 			//pulls out the top five closest stations and extracts the snow fall data
+	 			//putting all of the data into an array of doubles
+	 			//converting M's to -1 so they can be removed later and T to 0.01 inches of snow
 	 			for(int i = 0; i < 5; i++) {
 	 				String stationInfo = Stations.get(i);
 	 				stationInfo = stationInfo.substring(nthIndexOf(stationInfo,",",6)+1,stationInfo.lastIndexOf(","));
@@ -247,7 +241,6 @@ public class Weather {
 	 							stationInfo = stationInfo.substring(stationInfo.indexOf(",")+1);
 	 						}
 	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = 0.01;
-	 						//System.out.println("Index: "+(i*monthLength+count+((year-2016)*monthLength*5))+" Count: "+count);
 	 					}
 	 					else if(stationInfo.substring(0,1).equals("M")) {
 	 						if(stationInfo.length() == 1) {
@@ -261,11 +254,9 @@ public class Weather {
 	 					else if(stationInfo.contains(",")) {
 	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = Double.parseDouble(stationInfo.substring(0,stationInfo.indexOf(",")));
 	 						stationInfo = stationInfo.substring(stationInfo.indexOf(",")+1);
-	 						//System.out.println("Index: "+(i*monthLength+count+((year-2016)*monthLength*5))+" Count: "+count);
 	 					}
 	 					else{
 	 						dataPoints[i*monthLength+count+((year-2016)*monthLength*5)] = Double.parseDouble(stationInfo);
-	 						//System.out.println("Index: "+(i*monthLength+count+((year-2016)*monthLength*5))+" Count: "+count+"\n");
 	 						stationInfo = "";
 	 					}
 	 					count++;
@@ -277,11 +268,13 @@ public class Weather {
 	 		}
 		}
  		int numMs = 0;
+ 		//finds the number of missing data points
  		for(double e: dataPoints) {
  			if(e == -1) {
  				numMs++;
  			}
  		}
+ 		//creates a new array of doubles without the missing data points
  		double[] dataPointsExcludingMs = new double[dataPoints.length-numMs]; 
  		int count = 0;
  		for(int i = 0; i < dataPoints.length; i++){
@@ -298,18 +291,22 @@ public class Weather {
  		}
  		return dataPointsExcludingMs;
 	}
+	// finds the x index of a specific sub string
 	public static int nthIndexOf(String str, String substr, int n) {
 	    int pos = str.indexOf(substr);
 	    while (--n > 0 && pos != -1)
 	        pos = str.indexOf(substr, pos + 1);
 	    return pos;
 	}
+	//counts the number of occurrences of a specific substring 
 	public static int countOccurances(String txt, String rep){
 		return txt.length()-txt.replace(rep,"").length();
 	}
+	//The distance formula
 	public static double getDistance(double x1,double y1,double x2,double y2) {
 		return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
 	}
+	//Uses multiple methods to gather information on a specific zipcode
 	public static PredictionData processZip(int zip) {
 		PredictionData weatherInfo = new PredictionData();
 		printNote(getWeather(zip),1,weatherInfo);
