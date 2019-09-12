@@ -150,7 +150,6 @@ public class Weather {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Test: "+info);
 		double popDensity = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
 		
 		info = info.substring(0,info.lastIndexOf(","));
@@ -179,6 +178,10 @@ public class Weather {
 		info = info.substring(info.indexOf(";")+1);
 		String loc = info.substring(0,info.indexOf(";"))+" "+info.substring(info.indexOf(";")+1,info.indexOf(";")+3);
 		System.out.println(loc);
+		String state = loc.substring(loc.indexOf(" ")+1);
+		weatherInfo.setState(state);
+		String county = loc.substring(0,loc.indexOf(" "));
+		weatherInfo.setCounty(county);
 	}
 	public static void main(String[] args) {
 		PredictionData weatherInfo = new PredictionData();
@@ -190,7 +193,7 @@ public class Weather {
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
 		getZipSpecifications(13066,weatherInfo);
-		getDataPoints(weatherInfo.getLongitude(),weatherInfo.getLatitude(),"NY",1);
+		getDataPoints(weatherInfo.getLongitude(),weatherInfo.getLatitude(),weatherInfo.getState(),1);
 	}
 	public static double[] getDataPoints(double lon, double lat, String state,int monthNum) {
 		double[] dataPoints = new double[1];
