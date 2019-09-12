@@ -317,6 +317,7 @@ public class Weather {
 	public static PredictionData processZip(int zip) {
 		PredictionData weatherInfo = new PredictionData();
 		printNote(getWeather(zip),1,weatherInfo);
+		getZipSpecifications(13066,weatherInfo);
 		Calculate calc = new Calculate(weatherInfo);
 		calc.snowDayChance();
 		return weatherInfo;
