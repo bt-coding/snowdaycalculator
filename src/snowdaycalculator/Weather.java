@@ -136,7 +136,7 @@ public class Weather {
 				}
 		    }
 		  }
-	public static void getZipSpecifications(int zipcode) {
+	public static void getZipSpecifications(int zipcode,PredictionData weatherInfo) {
 		String info = "";
 		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo.csv"));) {
 		    while (scanner.hasNextLine()) {
@@ -150,7 +150,9 @@ public class Weather {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Test: "+info);
 		double popDensity = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
+		
 		info = info.substring(0,info.lastIndexOf(","));
 		double areaOfZip = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
 		System.out.println("Pop density: "+popDensity);
@@ -170,8 +172,10 @@ public class Weather {
 		}
 		double lon = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
 		System.out.println("lon: "+lon);
+		weatherInfo.setLongitude(lon);
 		double lat = Double.parseDouble(info.substring(info.lastIndexOf(";")+1,info.lastIndexOf(",")));
 		System.out.println("lat: "+lat);
+		weatherInfo.setLatitude(lat);
 		info = info.substring(info.indexOf(";")+1);
 		String loc = info.substring(0,info.indexOf(";"))+" "+info.substring(info.indexOf(";")+1,info.indexOf(";")+3);
 		System.out.println(loc);
@@ -185,8 +189,8 @@ public class Weather {
 		System.out.println("Min Temp: "+weatherInfo.getTempLow());
 		System.out.println(weatherInfo.getCondition());
 		System.out.println("Average wind speed: "+weatherInfo.getWindSpeed());
-		getZipSpecifications(13066);
-		getDataPoints(42.8864,78.8784,"NY",1);
+		getZipSpecifications(13066,weatherInfo);
+		getDataPoints(weatherInfo.getLongitude(),weatherInfo.getLatitude(),"NY",1);
 	}
 	public static double[] getDataPoints(double lon, double lat, String state,int monthNum) {
 		double[] dataPoints = new double[1];
