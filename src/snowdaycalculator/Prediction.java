@@ -94,7 +94,23 @@ public class Prediction extends HttpServlet {
 							"        <h1 style=\"margin-bottom:5px\">Accurate Snow Day Predictor</h1>\r\n" + 
 							"        <h3 style=\"margin-top:0px\">Tired of inaccurate results? Try this data oriented prediction tool!</h3>\r\n" + 
 							"      </div>\r\n" + 
-							"      <div name=\"predictArea\" style=\"position:relative;text-align:center\">\r\n" + 
+							"      <div name=\"predictArea\" style=\"text-align:center\">\r\n" + 
+							"        <div name=\"dataSection\" style=\"text-align:center;display:inline-block;margin-top:0px;width:33%\">\r\n" + 
+							"        	<p>ZIPCODE: " + data.getZipcode() + "</p>\r\n" + 
+							"            <p>City: " + data.getCounty() + "</p>\r\n" + 
+							"            <p>State: " + data.getState() + "</p>\r\n" + 
+							"            <p>Latitude: " + data.getLatitude() + "</p>\r\n" + 
+							"            <p>Longitude: " + data.getLongitude() + "</p>\r\n" + 
+							"            <p>Area(m^2): </p> \r\n" + 
+							"            <p>Pop. Density: </p>\r\n" + 
+							"            <p>Pred. Temperature Low: " + Calculate.convertKtoF(data.getTempLow()) + "</p>\r\n" +
+							"            <p>Pred. Temperature High: " + Calculate.convertKtoF(data.getTempHigh()) + "</p>\r\n" +
+							"            <p>Precip. Amount: " + data.getPrecipAmount() + "</p>\r\n" + 
+							"            <p>Rel. humidity: " + data.getHumidity() + "</p>\r\n" + 
+							"            <p>Wind speed: " + data.getWindSpeed() + "</p>\r\n" + 
+							"            <p>Will Snow Stick: " + Calculate.willSnowStick(data.getHumidity(), Calculate.convertKtoC(data.getTempLow()))+ "</p>\r\n" + 
+							"            <p>Wind chill: " + Calculate.calculateWindChill(data.getWindSpeed(), Calculate.convertKtoF(data.getTempLow())) + "</p>\r\n" + 
+							"        </div>\r\n" + 
 							"        <div name=\"predictionData\" style=\"align:center;display:inline-block;margin-top:100px\">\r\n" + 
 							"          <div class=\"resultText\">\r\n" + 
 							"            <t class=\"percentChance\" style=\"font-size:50px\"> " + (int)((100*chance)+.5) + "%</t>\r\n" + 
@@ -108,11 +124,11 @@ public class Prediction extends HttpServlet {
 							"          </div>\r\n" + 
 							"          </div>\r\n" + 
 							"        </div>\r\n" + 
-							"        <div name=\"twitterBox\" style=\"margin-right:0px;display:inline-block;position:absolute;width:33%;height:0px;vertical-align:top;margin-top:0px\">\r\n" + 
+							"        <div name=\"twitterBox\" style=\"margin-right:0px;display:inline-block;width:33%;height:0px;vertical-align:top;margin-top:0px\">\r\n" + 
 							"          <a class=\"twitter-timeline\" data-lang=\"en\" data-width=\"300\" data-height=\"600\" data-dnt=\"true\" data-theme=\"light\" href=\"https://twitter.com/NWS?ref_src=twsrc%5Etfw\">Tweets by NWS</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>\r\n" + 
 							"        </div>\r\n" + 
 							"      </div>\r\n" + 
-							"      <div name=\"cloudMap\" style=\"text-align:center;margin-right:400px;margin-top:74px\">\r\n" + 
+							"      <div name=\"cloudMap\" style=\"text-align:center;margin-right:400px;margin-top:74px;position:relative\">\r\n" + 
 							"        <img src=\"./images/worldMap.jpg\" width=\"400\" height=\"400\" class=\"worldMap\">\r\n" + 
 							"        <img style=\"-webkit-user-select: none;margin: auto;cursor: zoom-in;\" src=\"./backendGenerated/precipMap.png\" width=\"400\" height=\"400\" class=\"clouds\">\r\n" + 
 							"      </div>\r\n" + 
@@ -127,11 +143,8 @@ public class Prediction extends HttpServlet {
 							"  }\r\n" + 
 							"  body {\r\n" + 
 							"    font-family: 'Fira Sans', serif;\r\n" + 
-							"  }\r\n" +
-							" .progress-bar-success {" +
-							"	 background-color: #a4a4a4" +
-							"  }" +
-							"</style>\r\n" + 
+							"  }\r\n" + 
+							" .progress-bar-success {	 background-color: #a4a4a4  }</style>\r\n" + 
 							"<script>\r\n" + 
 							"<!-- Change snow animation style -->\r\n" + 
 							"snowStorm.snowColor = '#ffffff'; //#99ccff\r\n" + 
@@ -139,8 +152,7 @@ public class Prediction extends HttpServlet {
 							"snowStorm.excludeMobile = false;\r\n" + 
 							"snowStorm.followMouse = false;\r\n" + 
 							"snowStorm.snowCharacter = '*';\r\n" + 
-							"</script>\r\n" + 
-							"");
+							"</script>");
 							
 				}
 			} finally {

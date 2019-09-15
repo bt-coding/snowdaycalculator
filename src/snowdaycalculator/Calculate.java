@@ -25,13 +25,14 @@ public class Calculate {
 		Date date = new Date();
 		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		int month = localDate.getMonthValue();
-		snowdayChance = dataIrregularityChance(data.getPrecipAmount(),Weather.getDataPoints(data.getLongitude(), data.getLatitude(), data.getState(), month));
+		snowdayChance = dataIrregularityChance(data.getPrecipAmount(),Weather.getDataPoints(data.getLongitude(), data.getLatitude(), data.getState(), month),data);
 		setSnowdayChance(snowdayChance);
 	}
 	public void setSnowdayChance(double chance) {
 		data.setSnowDayChance(chance);
 	}
 	public static boolean willSnowStick(double rh, double temp) {
+		//requires celcius
 		if(9.5*Math.pow(Math.E,((-17.27*temp)/(temp+238.3)))*(10.5-temp) >= rh){
 			return true;
 		}
@@ -44,6 +45,7 @@ public class Calculate {
         return ws* 2.237;
     }
     public static double calculateWindChill(double ws, double temp){
+    	//requires fahrenheit
         return 35.74+(0.6215*temp)-(35.75*Math.pow(ws,0.16))+(0.4275*temp*Math.pow(ws,0.16));
     }
     public static void main(String[] args) {
@@ -53,22 +55,42 @@ public class Calculate {
     public static double convertKtoC(double temp) {
     	return temp-273.15;
     }
-    public static double dataIrregularityChance(double point, double[] datapoints) {
+    public static double getChancefromWindChill(double wc) {
+    	double calc = ((-.01*wc*wc*wc)+(10*wc))/100;
+    	if (calc>0) {
+    		return ((-.01*wc*wc*wc)+(10*wc))/100;
+    	}
+    	return 0;
+    }
+    public static double dataIrregularityChance(double point, double[] datapoints, PredictionData dat) {
     	double total=0;
     	for(double d : datapoints) {
     		total+=d;
     	}
-    	double ave = total/datapoints.length;
+    	double ave = total/(double)datapoints.length;
         double totsquare = 0;
         for(double d : datapoints) {
         	totsquare+=((d-ave)*(d-ave));
         }
-        totsquare/=datapoints.length;
+        totsquare/=(double)datapoints.length;
         double stdev = Math.sqrt(totsquare);
     	double chance = 0;
         if (stdev!=0) {
     		chance = 8*(point/stdev);
+    	} else {
+    		chance = 8*(point/.000000001);
     	}
+        if (willSnowStick(dat.getHumidity(),convertKtoC(dat.getTempLow()))) {
+        	chance/=2;
+        }
+        chance+=getChancefromWindChill(calculateWindChill(dat.getWindSpeed(),convertKtoF(dat.getTempLow())));
+        
+        //END CALCULATIONS HERE
+        if (chance > 1) {
+        	chance = 1;
+        } else if (chance < 0) {
+        	chance=0;
+        }
     	return chance;
     }
 }

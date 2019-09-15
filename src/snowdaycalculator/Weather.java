@@ -320,9 +320,10 @@ public class Weather {
 	              System.getProperty("user.dir"));
 		PredictionData weatherInfo = new PredictionData();
 		printNote(getWeather(zip),1,weatherInfo);
-		getZipSpecifications(13066,weatherInfo);
+		getZipSpecifications(zip,weatherInfo);
 		Calculate calc = new Calculate(weatherInfo);
 		calc.snowDayChance();
+		weatherInfo.setZipcode(zip);
 		return weatherInfo;
 	}
 }
