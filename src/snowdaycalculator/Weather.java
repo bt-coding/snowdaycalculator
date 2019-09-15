@@ -12,6 +12,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.NamedNodeMap;
 public class Weather {
+	final static String resourceloc = "B:/javaweb/snowdaycalculator/resources";
 	public Weather() {
 		
 	}
@@ -138,7 +139,7 @@ public class Weather {
 		  }
 	public static void getZipSpecifications(int zipcode,PredictionData weatherInfo) {
 		String info = "";
-		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo.csv"));) {
+		try (Scanner scanner = new Scanner(new File(resourceloc + "/zipCodeInfo.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
 		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,5)) == zipcode) {
@@ -157,7 +158,7 @@ public class Weather {
 		System.out.println("Pop density: "+popDensity);
 		System.out.println("Area of zipcode: "+areaOfZip);
 		info = "";
-		try (Scanner scanner = new Scanner(new File("resources/zipCodeInfo2.csv"));) {
+		try (Scanner scanner = new Scanner(new File(resourceloc + "/zipCodeInfo2.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
 		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,5)) == zipcode) {
@@ -203,8 +204,8 @@ public class Weather {
 			//sorts all of the stations by distance to the input cords
 			Stations = new ArrayList<String>();
 			
-	 		try (Scanner scanner = new Scanner(new File("resources/snowfalldata/"+state+"/"+year+"/"+state+"-"+year+"-"+monthNum+"_STATION_COUNTY_SNOWFALL.csv"));) {
-	 			scanner.nextLine();
+	 		try (Scanner scanner = new Scanner(new File(resourceloc + "/snowfalldata/"+state+"/"+year+"/"+state+"-"+year+"-"+monthNum+"_STATION_COUNTY_SNOWFALL.csv"));) {
+			scanner.nextLine();
 	 			String numDays = scanner.nextLine();
 	 			if(dataPoints.length == 1) {
 	 				//the 5 nearest places for the past 3 years
@@ -315,6 +316,8 @@ public class Weather {
 	}
 	//Uses multiple methods to gather information on a specific zipcode
 	public static PredictionData processZip(int zip) {
+		System.out.println("Working Directory = " +
+	              System.getProperty("user.dir"));
 		PredictionData weatherInfo = new PredictionData();
 		printNote(getWeather(zip),1,weatherInfo);
 		getZipSpecifications(13066,weatherInfo);
