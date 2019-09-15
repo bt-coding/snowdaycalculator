@@ -28,6 +28,29 @@ public class PredictAPI extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter ot = null;
+		boolean gotInput = true;
+		try {
+			request.getParameter("zipcode");
+		} catch (Exception e) {
+			gotInput = false;
+			e.printStackTrace();
+		}
+		if (!gotInput) {
+			try {
+				ot = response.getWriter();
+				ot.println("NO DATA WAS SUPPLIED");
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (ot != null) {
+					ot.close();
+				} else {
+					System.out.println("A very strange error has occurred");
+				}
+			}
+			return;
+		}
 		String errorMessage = "";
 		boolean isValid = true;
 		int zcode = 0;
