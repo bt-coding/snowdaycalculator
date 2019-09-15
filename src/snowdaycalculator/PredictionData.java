@@ -27,11 +27,16 @@ public class PredictionData {
 	private double humidity;
 	private double plowEfficiency;
 	private String county;
-
+	private String reason;
+	private String message;
+	private double area;
+	private double popDensity;
+	private double statUnusual;
 	public PredictionData(double tempLow, double tempHigh, double tempNorm, boolean precipPresent, double precipAmount,
 			boolean alertPresent, int alertSeverity, boolean stormPresent, String stormStartTime, String stormEndTime,
 			double percentUnusual, double snowDayChance, double delayChance, int zipcode, double latitude,
-			double longitude, String state,String condition,double windSpeed,double humidity, double plowEfficiency,String county) {
+			double longitude, String state, String condition, double windSpeed, double humidity, double plowEfficiency,
+			String county, String reason, String message, double area, double popDensity, double statUnusual) {
 		super();
 		this.tempLow = tempLow;
 		this.tempHigh = tempHigh;
@@ -55,6 +60,11 @@ public class PredictionData {
 		this.humidity = humidity;
 		this.plowEfficiency = plowEfficiency;
 		this.county = county;
+		this.reason = reason;
+		this.message = message;
+		this.area = area;
+		this.popDensity = popDensity;
+		this.statUnusual = statUnusual;
 	}
 	public PredictionData() {
 		super();
@@ -79,36 +89,11 @@ public class PredictionData {
 		this.windSpeed = -1;
 		this.humidity = -1;
 		this.county = "";
-	}
-	public String getCounty() {
-		return this.county;
-	}
-	public void setCounty(String county) {
-		this.county = county;
-	}
-	public double getPlowEfficiency() {
-		return this.plowEfficiency;
-	}
-	public void setPlowEfficiency(double plowEfficiency) {
-		this.plowEfficiency = plowEfficiency;
-	}
-	public double getHumidity() {
-		return humidity;
-	}
-	public void setHumidity(double humidity) {
-		this.humidity = humidity;
-	}
-	public double getWindSpeed() {
-		return windSpeed;
-	}
-	public void setWindSpeed(double windSpeed) {
-		this.windSpeed = windSpeed;
-	}
-	public String getCondition() {
-		return condition;
-	}
-	public void setCondition(String condition) {
-		this.condition = condition;
+		this.reason = "";
+		this.message = "";
+		this.area = 0;
+		this.popDensity = 0;
+		this.statUnusual = 0;
 	}
 	public double getTempLow() {
 		return tempLow;
@@ -212,6 +197,66 @@ public class PredictionData {
 	public void setState(String state) {
 		this.state = state;
 	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	public double getWindSpeed() {
+		return windSpeed;
+	}
+	public void setWindSpeed(double windSpeed) {
+		this.windSpeed = windSpeed;
+	}
+	public double getHumidity() {
+		return humidity;
+	}
+	public void setHumidity(double humidity) {
+		this.humidity = humidity;
+	}
+	public double getPlowEfficiency() {
+		return plowEfficiency;
+	}
+	public void setPlowEfficiency(double plowEfficiency) {
+		this.plowEfficiency = plowEfficiency;
+	}
+	public String getCounty() {
+		return county;
+	}
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public double getArea() {
+		return area;
+	}
+	public void setArea(double area) {
+		this.area = area;
+	}
+	public double getPopDensity() {
+		return popDensity;
+	}
+	public void setPopDensity(double popDensity) {
+		this.popDensity = popDensity;
+	}
+	public double getStatUnusual() {
+		return statUnusual;
+	}
+	public void setStatUnusual(double statUnusual) {
+		this.statUnusual = statUnusual;
+	}
 	@Override
 	public String toString() {
 		return "PredictionData [tempLow=" + tempLow + ", tempHigh=" + tempHigh + ", tempNorm=" + tempNorm
@@ -219,6 +264,9 @@ public class PredictionData {
 				+ alertPresent + ", alertSeverity=" + alertSeverity + ", stormPresent=" + stormPresent
 				+ ", stormStartTime=" + stormStartTime + ", stormEndTime=" + stormEndTime + ", percentUnusual="
 				+ percentUnusual + ", snowDayChance=" + snowDayChance + ", delayChance=" + delayChance + ", zipcode="
-				+ zipcode + ", latitude=" + latitude + ", longitude=" + longitude + ", state=" + state + "]";
+				+ zipcode + ", latitude=" + latitude + ", longitude=" + longitude + ", state=" + state + ", condition="
+				+ condition + ", windSpeed=" + windSpeed + ", humidity=" + humidity + ", plowEfficiency="
+				+ plowEfficiency + ", county=" + county + ", reason=" + reason + ", message=" + message + ", area="
+				+ area + ", popDensity=" + popDensity + ", statUnusual=" + statUnusual + "]";
 	}
 }

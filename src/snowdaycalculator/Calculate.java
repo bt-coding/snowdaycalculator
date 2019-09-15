@@ -25,8 +25,11 @@ public class Calculate {
 		Date date = new Date();
 		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		int month = localDate.getMonthValue();
-		snowdayChance = dataIrregularityChance(data.getPrecipAmount(),Weather.getDataPoints(data.getLongitude(), data.getLatitude(), data.getState(), month),data);
-		setSnowdayChance(snowdayChance);
+		String[] ret = (dataIrregularityChance(data.getPrecipAmount(),Weather.getDataPoints(data.getLongitude(), data.getLatitude(), data.getState(), month),data));
+		snowdayChance = Double.parseDouble(ret[0]);		
+		data.setSnowDayChance(snowdayChance);
+		data.setReason(ret[1]);
+		data.setStatUnusual(Double.parseDouble(ret[2]));
 	}
 	public void setSnowdayChance(double chance) {
 		data.setSnowDayChance(chance);
@@ -62,7 +65,12 @@ public class Calculate {
     	}
     	return 0;
     }
-    public static double dataIrregularityChance(double point, double[] datapoints, PredictionData dat) {
+    public static double convertMMtoInches(double mm) {
+    	return (mm/25.4);
+    }
+    public static String[] dataIrregularityChance(double point, double[] datapoints, PredictionData dat) {
+    	String reason = "Generic Reason";
+    	
     	double total=0;
     	for(double d : datapoints) {
     		total+=d;
@@ -77,15 +85,23 @@ public class Calculate {
     	double chance = 0;
         if (stdev!=0) {
     		chance = 8*(point/stdev);
+    		reason = "Statistical commonality of this much snow is " + (point/stdev) +".";
     	} else {
     		chance = 8*(point/.000000001);
+    		reason = "Very little snow usually occurs in this region at this time. Therefore the chance will be inflated";
     	}
         if (willSnowStick(dat.getHumidity(),convertKtoC(dat.getTempLow()))) {
         	chance/=2;
+        	reason = reason + " Chance Decreased because snow is unlikely to stick to the ground";
         }
-        chance+=getChancefromWindChill(calculateWindChill(dat.getWindSpeed(),convertKtoF(dat.getTempLow())));
+        double wcchance = getChancefromWindChill(calculateWindChill(dat.getWindSpeed(),convertKtoF(dat.getTempLow())));
+        chance+=wcchance;
+        if (wcchance > .3) {
+        	reason = reason + " The Wind Chill is increasing this prediction.";
+        }
         if (dat.getTempHigh()>38) {
         	chance=0;
+        	reason = "The temperature is too high for a chance of a snow day";
         }
         
         //END CALCULATIONS HERE
@@ -94,6 +110,8 @@ public class Calculate {
         } else if (chance < 0) {
         	chance=0;
         }
-    	return chance;
+        
+        
+    	return new String[] {chance+"",reason,(point/stdev)+""};
     }
 }

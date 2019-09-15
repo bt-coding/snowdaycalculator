@@ -32,15 +32,25 @@ public class Prediction extends HttpServlet {
 		try {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
+			boolean valid2 = true;
+			PredictionData data = null;
 			try {
-				if (!isValid) {
+				data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
+			} catch (Exception e) {
+				if (errorMessage == "") {
+					errorMessage = "BACKEND ERROR, we will try to resolve this as soon as possible";
+				}
+				valid2 = false;
+			}
+			try {
+				if (!isValid || !valid2) {
 					out.println("<!DOCTYPE html>");
 					out.println("<html>");
 					out.println("<head>");
 					out.println("<title>Accurate Snowday Prediction</title>");
 					out.println("</head>");
 					out.println("<body>");
-					out.println("<h1> INVALID ZIPCODE ENTERED </h1>");
+					out.println("<h1> AN ERROR HAS ARISEN </h1>");
 					out.println("<h3>error: " + errorMessage + "</h3>");
 					out.println("<button onclick=\"goBack()\">Go Back</button>");
 					out.println("</body>");
@@ -51,7 +61,7 @@ public class Prediction extends HttpServlet {
 					out.println("}");
 					out.println("</script>");
 				} else {
-					PredictionData data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
+					data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
 					double chance = data.getSnowDayChance();
 					String message = "";
 					if (chance<=.30) {
@@ -112,8 +122,8 @@ public class Prediction extends HttpServlet {
 							"            <p>State: " + data.getState() + "</p>\r\n" + 
 							"            <p>Latitude: " + data.getLatitude() + "</p>\r\n" + 
 							"            <p>Longitude: " + data.getLongitude() + "</p>\r\n" + 
-							"            <p>Area(m^2): </p> \r\n" + 
-							"            <p>Pop. Density: </p>\r\n" + 
+							"            <p>Area(m^2): " + data.getArea() + "</p> \r\n" + 
+							"            <p>Pop. Density: " + data.getPopDensity() +  "</p>\r\n" + 
 							"            <p>Pred. Temperature Low: " + Calculate.convertKtoF(data.getTempLow()) + "</p>\r\n" +
 							"            <p>Pred. Temperature High: " + Calculate.convertKtoF(data.getTempHigh()) + "</p>\r\n" +
 							"            <p>Precip. Amount: " + data.getPrecipAmount() + "</p>\r\n" + 
@@ -121,8 +131,11 @@ public class Prediction extends HttpServlet {
 							"            <p>Wind speed: " + data.getWindSpeed() + "</p>\r\n" + 
 							"            <p>Will Snow Stick: " + Calculate.willSnowStick(data.getHumidity(), Calculate.convertKtoC(data.getTempLow()))+ "</p>\r\n" + 
 							"            <p>Wind chill: " + Calculate.calculateWindChill(data.getWindSpeed(), Calculate.convertKtoF(data.getTempLow())) + "</p>\r\n" + 
+							"            <p>Storm Start: " + data.getStormStartTime() + "</p>\r\n" + 
+							"            <p>Storm End: " + data.getStormEndTime() + "</p>\r\n" + 
+							"            <p>Data Unusualness: " + data.getStatUnusual() + "</p>\r\n" + 
 							"        </div>\r\n" + 
-							"        <div name=\"predictionData\" style=\"align:center;display:inline-block;margin-top:100px;vertical-align:top\">\r\n" + 
+							"        <div name=\"predictionData\" style=\"align:center;display:inline-block;margin-top:100px;vertical-align:top;width:400px\">\r\n" + 
 							"          <div class=\"resultText\">\r\n" + 
 							"            <t class=\"percentChance\" style=\"font-size:50px\"> " + (int)((100*chance)+.5) + "%</t>\r\n" + 
 							"          </div>\r\n" + 
@@ -136,6 +149,9 @@ public class Prediction extends HttpServlet {
 							"          </div>\r\n" + 
 							"          <div class=\"message\">\r\n" + 
 							"          	<p style=\"font-size:15px\">" + message + "</p>\r\n" + 
+							"          </div>\r\n" + 
+							"          <div class=\"reason\">\r\n" + 
+							"          	<p style=\"font-size:15px\">" + data.getReason() + "</p>\r\n" + 
 							"          </div>\r\n" + 
 							"        </div>\r\n" + 
 							"        <div name=\"twitterBox\" style=\"margin-right:0px;display:inline-block;width:33%;height:0px;vertical-align:top;margin-top:0px\">\r\n" + 

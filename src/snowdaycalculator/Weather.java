@@ -156,7 +156,9 @@ public class Weather {
 		info = info.substring(0,info.lastIndexOf(","));
 		double areaOfZip = Double.parseDouble(info.substring(info.lastIndexOf(",")+1));
 		System.out.println("Pop density: "+popDensity);
+		weatherInfo.setPopDensity(popDensity);
 		System.out.println("Area of zipcode: "+areaOfZip);
+		weatherInfo.setArea(areaOfZip);
 		info = "";
 		try (Scanner scanner = new Scanner(new File(resourceloc + "/zipCodeInfo2.csv"));) {
 		    while (scanner.hasNextLine()) {
@@ -239,7 +241,7 @@ public class Weather {
 	 				String stationInfo = Stations.get(i);
 	 				stationInfo = stationInfo.substring(nthIndexOf(stationInfo,",",6)+1,stationInfo.lastIndexOf(","));
 	 				int count = 0;
-	 				System.out.println(stationInfo);
+	 				//System.out.println(stationInfo);
 	 				while(!stationInfo.equals("")) {
 	 					if(stationInfo.substring(0,1).equals("T")) {
 	 						if(stationInfo.length() == 1) {
@@ -294,9 +296,9 @@ public class Weather {
  				count++;
  			}
  		}
- 		for(double e: dataPointsExcludingMs) {
+ 		/*for(double e: dataPointsExcludingMs) {
  			System.out.println(e);
- 		}
+ 		}*/
  		return dataPointsExcludingMs;
 	}
 	// finds the x index of a specific sub string
