@@ -54,13 +54,13 @@ public class Prediction extends HttpServlet {
 					PredictionData data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
 					double chance = data.getSnowDayChance();
 					String message = "";
-					if (chance<=30) {
+					if (chance<=.30) {
 						message = "Sorry, a snow day is highly unlikely :(";
-					} else if (chance<=50) {
+					} else if (chance<=.5) {
 						message = "A delay is possible, but not likely";
-					} else if (chance<=75) {
+					} else if (chance<=.75) {
 						message = "Decent chance of a delay, snowday unlikely but possible";
-					} else if (chance<=90) {
+					} else if (chance<=.9) {
 						message = "Likely delay, if not a snow day";
 					} else {
 						message = "Snow day highly likely! Good luck!";

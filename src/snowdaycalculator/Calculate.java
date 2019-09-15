@@ -84,6 +84,9 @@ public class Calculate {
         	chance/=2;
         }
         chance+=getChancefromWindChill(calculateWindChill(dat.getWindSpeed(),convertKtoF(dat.getTempLow())));
+        if (dat.getTempHigh()>38) {
+        	chance=0;
+        }
         
         //END CALCULATIONS HERE
         if (chance > 1) {
