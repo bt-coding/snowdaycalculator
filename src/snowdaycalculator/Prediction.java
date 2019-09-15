@@ -61,7 +61,6 @@ public class Prediction extends HttpServlet {
 					out.println("}");
 					out.println("</script>");
 				} else {
-					data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
 					double chance = data.getSnowDayChance();
 					String message = "";
 					if (chance<=.30) {
