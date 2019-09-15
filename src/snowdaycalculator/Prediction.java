@@ -53,7 +53,18 @@ public class Prediction extends HttpServlet {
 				} else {
 					PredictionData data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
 					double chance = data.getSnowDayChance();
-					
+					String message = "";
+					if (chance<=30) {
+						message = "Sorry, a snow day is highly unlikely :(";
+					} else if (chance<=50) {
+						message = "A delay is possible, but not likely";
+					} else if (chance<=75) {
+						message = "Decent chance of a delay, snowday unlikely but possible";
+					} else if (chance<=90) {
+						message = "Likely delay, if not a snow day";
+					} else {
+						message = "Snow day highly likely! Good luck!";
+					}
 					out.println("<!DOCTYPE html>\r\n" + 
 							"<html>\r\n" + 
 							"  <head>\r\n" + 
@@ -111,7 +122,7 @@ public class Prediction extends HttpServlet {
 							"            <p>Will Snow Stick: " + Calculate.willSnowStick(data.getHumidity(), Calculate.convertKtoC(data.getTempLow()))+ "</p>\r\n" + 
 							"            <p>Wind chill: " + Calculate.calculateWindChill(data.getWindSpeed(), Calculate.convertKtoF(data.getTempLow())) + "</p>\r\n" + 
 							"        </div>\r\n" + 
-							"        <div name=\"predictionData\" style=\"align:center;display:inline-block;margin-top:100px\">\r\n" + 
+							"        <div name=\"predictionData\" style=\"align:center;display:inline-block;margin-top:100px;vertical-align:top\">\r\n" + 
 							"          <div class=\"resultText\">\r\n" + 
 							"            <t class=\"percentChance\" style=\"font-size:50px\"> " + (int)((100*chance)+.5) + "%</t>\r\n" + 
 							"          </div>\r\n" + 
@@ -122,6 +133,9 @@ public class Prediction extends HttpServlet {
 							"            <div class=\"progress-bar progress-bar-success\" role=\"progressbar\" style=\"width:" + (400-((int)(400*chance))) + "px\">\r\n" + 
 							"            </div>\r\n" + 
 							"          </div>\r\n" + 
+							"          </div>\r\n" + 
+							"          <div class=\"message\">\r\n" + 
+							"          	<p style=\"font-size:15px\">" + message + "</p>\r\n" + 
 							"          </div>\r\n" + 
 							"        </div>\r\n" + 
 							"        <div name=\"twitterBox\" style=\"margin-right:0px;display:inline-block;width:33%;height:0px;vertical-align:top;margin-top:0px\">\r\n" + 
