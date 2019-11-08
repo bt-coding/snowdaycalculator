@@ -59,9 +59,9 @@ public class Calculate {
     	return temp-273.15;
     }
     public static double getChancefromWindChill(double wc) {
-    	double calc = ((-.01*wc*wc*wc)+(10*wc))/100;
-    	if (calc>0) {
-    		return ((-.01*wc*wc*wc)+(10*wc))/100;
+    	double calc = (-.005*wc*wc*wc)/100;
+    	if (calc > 0) {
+    		return calc;
     	}
     	return 0;
     }
@@ -70,6 +70,8 @@ public class Calculate {
     }
     public static String[] dataIrregularityChance(double point, double[] datapoints, PredictionData dat) {
     	String reason = "Generic Reason";
+    	
+    	point = convertMMtoInches(point);
     	
     	double total=0;
     	for(double d : datapoints) {
@@ -84,22 +86,24 @@ public class Calculate {
         double stdev = Math.sqrt(totsquare);
     	double chance = 0;
         if (stdev!=0) {
-    		chance = 8*(point/stdev);
+    		chance = (point/stdev);
     		reason = "Statistical commonality of this much snow is " + (point/stdev) +".";
     	} else {
-    		chance = 8*(point/.000000001);
-    		reason = "Very little snow usually occurs in this region at this time. Therefore the chance will be inflated";
+    		//chance = 8*(point/.000000001);
+    		chance = (.25*point);
+    		reason = "Very little snow usually occurs in this region at this time. Therefore a general approximation is applied due to lack of data";
     	}
-        if (willSnowStick(dat.getHumidity(),convertKtoC(dat.getTempLow()))) {
+        if (!willSnowStick(dat.getHumidity(),convertKtoC(dat.getTempLow()))) {
         	chance/=2;
         	reason = reason + " Chance Decreased because snow is unlikely to stick to the ground";
         }
         double wcchance = getChancefromWindChill(calculateWindChill(dat.getWindSpeed(),convertKtoF(dat.getTempLow())));
         chance+=wcchance;
+        System.out.println(wcchance);
         if (wcchance > .3) {
         	reason = reason + " The Wind Chill is increasing this prediction.";
         }
-        if (dat.getTempHigh()>38) {
+        if (convertKtoF(dat.getTempHigh())>38) {
         	chance=0;
         	reason = "The temperature is too high for a chance of a snow day";
         }
