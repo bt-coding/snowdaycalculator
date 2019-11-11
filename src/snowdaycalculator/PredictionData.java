@@ -18,7 +18,7 @@ public class PredictionData {
 	private double percentUnusual;
 	private double snowDayChance;
 	private double delayChance;
-	private int zipcode;
+	private String zipcode;
 	private double latitude;
 	private double longitude;
 	private String state;
@@ -34,7 +34,7 @@ public class PredictionData {
 	private double statUnusual;
 	public PredictionData(double tempLow, double tempHigh, double tempNorm, boolean precipPresent, double precipAmount,
 			boolean alertPresent, int alertSeverity, boolean stormPresent, String stormStartTime, String stormEndTime,
-			double percentUnusual, double snowDayChance, double delayChance, int zipcode, double latitude,
+			double percentUnusual, double snowDayChance, double delayChance, String zipcode, double latitude,
 			double longitude, String state, String condition, double windSpeed, double humidity, double plowEfficiency,
 			String county, String reason, String message, double area, double popDensity, double statUnusual) {
 		super();
@@ -81,7 +81,7 @@ public class PredictionData {
 		this.percentUnusual = 0;
 		this.snowDayChance = 0;
 		this.delayChance = 0;
-		this.zipcode = 0;
+		this.zipcode = "";
 		this.latitude = 0;
 		this.longitude = 0;
 		this.state = "";
@@ -173,10 +173,10 @@ public class PredictionData {
 	public void setDelayChance(double delayChance) {
 		this.delayChance = delayChance;
 	}
-	public int getZipcode() {
+	public String getZipcode() {
 		return zipcode;
 	}
-	public void setZipcode(int zipcode) {
+	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 	public double getLatitude() {

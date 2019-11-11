@@ -17,19 +17,13 @@ public class Weather {
 		
 	}
 	//The constructor method for the class
-	public static NodeList getWeather(int zipcode) {
-		String zip = Integer.toString(zipcode);
-		//0 pads the zipcode
-		while(zip.length() < 5) {
-			zip = "0"+zip;
-		}
-		System.out.println(zip);
+	public static NodeList getWeather(String zipcode) {
 		try {
 			String key = "";
 			key = "37fdd7c46ca515fc4b1a10c205022244";			
 		    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse("https://api.openweathermap.org/data/2.5/forecast?zip="+zip+"&mode=xml&&APPID="+key);
+			Document doc = dBuilder.parse("https://api.openweathermap.org/data/2.5/forecast?zip="+zipcode+"&mode=xml&&APPID="+key);
 			doc.getDocumentElement().normalize();
 			NodeList nList = doc.getElementsByTagName(doc.getDocumentElement().getNodeName());
 			return nList;
@@ -143,13 +137,12 @@ public class Weather {
 				}
 		    }
 		  }
-	public static void getZipSpecifications(int zipcode,PredictionData weatherInfo) {
+	public static void getZipSpecifications(String zipcode,PredictionData weatherInfo) {
 		String info = "";
-		String zip = Integer.toString(zipcode);
 		try (Scanner scanner = new Scanner(new File(resourceloc + "/zipCodeInfo.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
-		    	if(temp.substring(0,5).matches("[0-9]+") && temp.substring(0,temp.indexOf(",")).equals(zip)) {
+		    	if(temp.substring(0,5).matches("[0-9]+") && temp.substring(0,temp.indexOf(",")).equals(zipcode)) {
 		    		info = temp;
 		    		System.out.println("Found the zipcode info");
 		    		break;
@@ -207,7 +200,7 @@ public class Weather {
 		}
 	}
 	public static void main(String[] args) {
-		int zip = 5501;
+		String zip = "5501";
 		PredictionData weatherInfo = new PredictionData();
 		printNote(getWeather(zip),1,weatherInfo);
 		System.out.println("Is there precipitation: "+weatherInfo.isPrecipPresent());
@@ -338,7 +331,7 @@ public class Weather {
 		return Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));
 	}
 	//Uses multiple methods to gather information on a specific zipcode
-	public static PredictionData processZip(int zip) {
+	public static PredictionData processZip(String zip) {
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));
 		PredictionData weatherInfo = new PredictionData();
