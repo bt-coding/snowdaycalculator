@@ -71,7 +71,7 @@ public class Calculate {
     public static String[] dataIrregularityChance(double point, double[] datapoints, PredictionData dat) {
     	String reason = "Generic Reason";
     	
-    	point = convertMMtoInches(point);
+    	//point = convertMMtoInches(point);
     	
     	double total=0;
     	for(double d : datapoints) {
