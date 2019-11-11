@@ -168,7 +168,7 @@ public class Weather {
 		try (Scanner scanner = new Scanner(new File(resourceloc + "/zipCodeInfo2.csv"));) {
 		    while (scanner.hasNextLine()) {
 		    	String temp = scanner.nextLine();
-		    	if(temp.substring(0,5).matches("[0-9]+") && Integer.parseInt(temp.substring(0,temp.indexOf(";"))) == zipcode) {
+		    	if(temp.substring(0,5).matches("[0-9]+") && (temp.substring(0,temp.indexOf(";"))) == zipcode) {
 		    		info = temp;
 		    		break;
 		    	}

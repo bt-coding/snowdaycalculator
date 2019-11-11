@@ -80,7 +80,7 @@ public class PredictAPI extends HttpServlet {
 			boolean valid2 = true;
 			PredictionData data = null;
 			try {
-				data = Weather.processZip(Integer.parseInt(request.getParameter("zipcode")));
+				data = Weather.processZip((request.getParameter("zipcode")));
 			} catch (Exception e) {
 				if (errorMessage == "") {
 					errorMessage = "BACKEND ERROR, we will try to resolve this as soon as possible";
