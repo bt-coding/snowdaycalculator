@@ -68,11 +68,14 @@ public class Calculate {
     public static double convertMMtoInches(double mm) {
     	return (mm/25.4);
     }
+    public static double convertCMtoInches(double cm) {
+    	return ((cm/25.4)*10);
+    }
     public static String[] dataIrregularityChance(double point, double[] datapoints, PredictionData dat) {
     	String reason = "Generic Reason";
     	
     	//point = convertMMtoInches(point);
-    	
+    	point = convertCMtoInches(point);
     	double total=0;
     	for(double d : datapoints) {
     		total+=d;
