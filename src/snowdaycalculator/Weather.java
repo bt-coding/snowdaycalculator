@@ -39,6 +39,9 @@ public class Weather {
 	 * puts that information into the PredictionData class
 	 * 
 	 */
+	 private void getDarkSkyData(PredictionData predictionInfo) {
+		 
+	 }
 	 private static void printNote(NodeList nodeList, int a,PredictionData predictionInfo) {
 		 	//1 == not yet reached the time, 2 == has reached the time, 3 == has passed the time
 		 	int hasReachedNearestMorningData = a;
