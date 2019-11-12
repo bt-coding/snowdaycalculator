@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.json.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
